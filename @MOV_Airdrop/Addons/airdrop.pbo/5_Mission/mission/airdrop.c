@@ -131,9 +131,22 @@ class AirDrop_Base
 	// In minutes
 	float m_Interval = 60.0;
     float m_Initial = 60.0; 
-	
+
 	void AirDrop_Base() 
 	{
+		if (GetGame().ConfigIsExisting("airdropInterval"))		
+			m_Interval = GetGame().ConfigGetInt("airdropInterval");
+		if (GetGame().ConfigIsExisting("airdropInitial"))		
+			m_Initial = GetGame().ConfigGetInt("airdropInitial");	
+		if (GetGame().ConfigIsExisting("airdropSpeed"))		
+			m_Speed = GetGame().ConfigGetInt("airdropSpeed");
+		if (GetGame().ConfigIsExisting("airdropHeight"))		
+			m_Height = GetGame().ConfigGetInt("airdropHeight");
+		if (GetGame().ConfigIsExisting("airdropItems"))		
+			m_Items = GetGame().ConfigGetInt("airdropItems");
+		if (GetGame().ConfigIsExisting("airdropInfected"))		
+			m_Infected = GetGame().ConfigGetInt("airdropInfected");	
+		
 		ResetPlane();
 		
 		GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(InitPlane, m_Initial * 60 * 1000, false);
@@ -236,11 +249,15 @@ class AirDrop_Base
 	{
         vector m_Base = m_Drop.GetPosition(), m_DynamicPos;
 		
+		/*
+		TODO: Modded class for LandMineTrap to remove delay
+		
 		m_DropParticle = EntityAI.Cast(GetGame().CreateObject( "LandMineTrap", m_Drop.GetPosition())); 
         m_DropParticle.SetOrientation("0 0 0");
         m_DropParticle.GetCompEM().SwitchOn(); 
         m_DropParticle.Delete();
 		m_DropParticle.GetCompEM().SwitchOff(); 
+		*/
 		
 		m_Particle = EntityAI.Cast(GetGame().CreateObject( "RDG2SmokeGrenade_Black", m_Drop.GetPosition())); 
         m_Particle.SetOrientation("0 0 0");
