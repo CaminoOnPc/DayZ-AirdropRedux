@@ -90,7 +90,7 @@ class AirDrop_Base
 	
 	void SendMessage(string message) 
 	{
-		GetGame().GetMission().OnEvent(ChatMessageEventTypeID, new ChatMessageEventParams(CCDirect, "", message, ""));	
+		m_NotificationFramework.ShowAlert(message, 3000);
 	}
 	
 	Object m_Plane;
@@ -114,7 +114,7 @@ class AirDrop_Base
 		m_Enabled = false;
 		
 		GetGame().AdminLog("<AirDrop Redux> :ResetPlane");
-		SendMessage("<AirDrop> The airplane has been vanished");
+		SendMessage("The airplane has been vanished");
 	}
 	
 	House m_Drop;
@@ -132,8 +132,10 @@ class AirDrop_Base
 	float m_Interval = 60.0;
     float m_Initial = 60.0; 
 
+	ref NotificationFramework m_NotificationFramework;
+		
 	void AirDrop_Base() 
-	{
+	{	
 		if (GetGame().ConfigIsExisting("airdropInterval"))		
 			m_Interval = GetGame().ConfigGetInt("airdropInterval");
 		if (GetGame().ConfigIsExisting("airdropInitial"))		
@@ -146,6 +148,8 @@ class AirDrop_Base
 			m_Items = GetGame().ConfigGetInt("airdropItems");
 		if (GetGame().ConfigIsExisting("airdropInfected"))		
 			m_Infected = GetGame().ConfigGetInt("airdropInfected");	
+		
+		m_NotificationFramework = new NotificationFramework();
 		
 		ResetPlane();
 		
@@ -218,7 +222,7 @@ class AirDrop_Base
         m_Temp[1] = GetGame().SurfaceY(m_ActiveAirDropPlaces.x, m_ActiveAirDropPlaces.y) + 1;
         m_Temp[2] = m_ActiveAirDropPlaces.y;
 		
-		SendMessage("<AirDrop Redux> The airplane is heading towards " + m_ActiveAirDropPlaces.name.ToLower());
+		SendMessage("The airplane is heading towards " + m_ActiveAirDropPlaces.name.ToLower());
 		
 		m_DropPos[0] = m_ActiveAirDropPlaces.x;
         m_DropPos[1] = m_ActiveAirDropPlaces.y;
@@ -352,12 +356,12 @@ class AirDrop_Base
 			{
 				m_Landed = true;
 				Drop();
-				SendMessage("<AirDrop Redux> The supplies have been dropped around " + m_ActiveAirDropPlaces.name.ToLower());
+				SendMessage("The supplies have been dropped around " + m_ActiveAirDropPlaces.name.ToLower());
 			}
 			else if(m_Dist <= m_ProximityDist && !m_ProximityWarning) 
 			{
 				m_ProximityWarning = true;
-				SendMessage("<AirDrop Redux> The plane is closing in on " + m_ActiveAirDropPlaces.name.ToLower());
+				SendMessage("The plane is closing in on " + m_ActiveAirDropPlaces.name.ToLower());
 			}
 		}
 		else 
