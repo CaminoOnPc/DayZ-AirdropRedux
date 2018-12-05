@@ -331,7 +331,7 @@ class AirDrop_Base
 	
 	void Drop() 
 	{
-        m_Drop = GetGame().CreateObject( "DropBox", m_Plane.GetPosition(), false, true );
+        m_Drop = GetGame().CreateObject( "DropBox", m_Plane.GetPosition() + "0 10 0", false, true );
         SetVelocity(m_Physical, "10 0 0");
         GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(DropSimulation, 10, true);
     }
