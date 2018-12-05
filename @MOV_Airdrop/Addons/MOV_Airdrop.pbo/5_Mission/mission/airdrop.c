@@ -81,12 +81,12 @@ class AirDrop_Base
 	
 	int m_SpawnCount = 4;
 	
-	ref AirDrop_Places m_AirDropPlaces[] = {
-        new AirDrop_Places(4807, 9812, "Northwest Airfield"),
-		AirDrop_Places(11464, 8908, "Berezino"),
-		AirDrop_Places(12159, 12583, "Krasnostav"),
-		AirDrop_Places(5043, 2505, "Balota"),
-    };
+	ref AirDrop_Places1 m_AirDropPlaces[] = {
+        new AirDrop_Places1(4807, 9812, "northwest airfield"),
+		AirDrop_Places1(11464, 8908, "berezino"),
+		AirDrop_Places1(12159, 12583, "krasnostav"),
+		AirDrop_Places1(5043, 2505, "balota"),
+    };	
 	
 	void SendMessage(string message) 
 	{
@@ -141,7 +141,9 @@ class AirDrop_Base
 		if (GetGame().ConfigIsExisting("airdropInitial"))		
 			m_Initial = GetGame().ConfigGetInt("airdropInitial");	
 		if (GetGame().ConfigIsExisting("airdropSpeed"))		
-			m_Speed = GetGame().ConfigGetInt("airdropSpeed");
+			m_FallSpeed = GetGame().ConfigGetInt("airdropFallSpeed");
+		if (GetGame().ConfigIsExisting("airdropSpeed"))		
+			m_FallSpeed = GetGame().ConfigGetInt("airdropFallSpeed");
 		if (GetGame().ConfigIsExisting("airdropHeight"))		
 			m_Height = GetGame().ConfigGetInt("airdropHeight");
 		if (GetGame().ConfigIsExisting("airdropItems"))		
@@ -222,7 +224,7 @@ class AirDrop_Base
         m_Temp[1] = GetGame().SurfaceY(m_ActiveAirDropPlaces.x, m_ActiveAirDropPlaces.y) + 1;
         m_Temp[2] = m_ActiveAirDropPlaces.y;
 		
-		SendMessage("The airplane is heading towards " + m_ActiveAirDropPlaces.name.ToLower());
+		SendMessage("The airplane is heading towards " + m_ActiveAirDropPlaces.name);
 		
 		m_DropPos[0] = m_ActiveAirDropPlaces.x;
         m_DropPos[1] = m_ActiveAirDropPlaces.y;
@@ -242,6 +244,7 @@ class AirDrop_Base
 	int m_Items = 7;
 	int m_Infected = 15;
 	
+	float m_FallSpeed = 0.2;
 	float m_Speed = 1.0;
 	float m_Height = 300;
 	
@@ -356,12 +359,12 @@ class AirDrop_Base
 			{
 				m_Landed = true;
 				Drop();
-				SendMessage("The supplies have been dropped around " + m_ActiveAirDropPlaces.name.ToLower());
+				SendMessage("The supplies have been dropped around " + m_ActiveAirDropPlaces.name);
 			}
 			else if(m_Dist <= m_ProximityDist && !m_ProximityWarning) 
 			{
 				m_ProximityWarning = true;
-				SendMessage("The plane is closing in on " + m_ActiveAirDropPlaces.name.ToLower());
+				SendMessage("The plane is closing in on " + m_ActiveAirDropPlaces.name);
 			}
 		}
 		else 
