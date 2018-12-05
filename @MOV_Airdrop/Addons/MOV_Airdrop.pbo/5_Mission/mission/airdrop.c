@@ -81,11 +81,11 @@ class AirDrop_Base
 	
 	int m_SpawnCount = 4;
 	
-	ref AirDrop_Places1 m_AirDropPlaces[] = {
-        new AirDrop_Places1(4807, 9812, "northwest airfield"),
-		AirDrop_Places1(11464, 8908, "berezino"),
-		AirDrop_Places1(12159, 12583, "krasnostav"),
-		AirDrop_Places1(5043, 2505, "balota"),
+	ref AirDrop_Places m_AirDropPlaces[] = {
+        new AirDrop_Places(4807, 9812, "northwest airfield"),
+		AirDrop_Places(11464, 8908, "berezino"),
+		AirDrop_Places(12159, 12583, "krasnostav"),
+		AirDrop_Places(5043, 2505, "balota"),
     };	
 	
 	void SendMessage(string message) 
@@ -156,7 +156,7 @@ class AirDrop_Base
 		ResetPlane();
 		
 		GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(InitPlane, m_Initial * 60 * 1000, false);
-		GetGame().AdminLog("<AirDrop Redux> :Init");	
+		Print("<AirDrop> Initializing");
 	}
 	
 	void InitPlane() 
@@ -176,8 +176,8 @@ class AirDrop_Base
 	
 	void SpawnPlane() 
 	{
-        GetGame().AdminLog("<AirDrop Redux> :SpawnPlane " + m_PlaneSpawn);
-
+		Print("<AirDrop> Spawning plane");
+		
         int side = Math.RandomInt(0,4);
         switch(side) {
             case 0: {
@@ -211,7 +211,7 @@ class AirDrop_Base
 		
 		if(m_SpawnCount < 1) 
 		{
-			GetGame().AdminLog("<AirDrop Redux> :SpawnCount is lower than 1");	
+			Print("<AirDrop> Spawning places count is lower than one");
 			m_ActiveAirDropPlaces = m_DefaultAirDropPlaces;
 		}
 		else
@@ -295,37 +295,42 @@ class AirDrop_Base
 	
 	void DropSimulation() 
 	{
-        float m_Ground = GetGame().SurfaceY(m_Drop.GetPosition()[0], m_Drop.GetPosition()[2]);
-        float diff = m_Drop.GetPosition()[1]-m_Physical.GetPosition()[1];
-        if(diff <= 0.0001) m_Motion += 1;
-        else m_Motion = 0;
-        if (m_Physical.GetPosition()[1] <= (m_Ground + 3.0) || m_Motion >= 25)
+        vector m_ObjectFall;
+		m_ObjectFall[0] = 0;
+		m_ObjectFall[1] = m_FallSpeed;
+		m_ObjectFall[2] = 0;
+		
+		float m_Ground = GetGame().SurfaceY(m_Drop.GetPosition()[0], m_Drop.GetPosition()[2]);	
+
+		vector m_Old = m_Drop.GetPosition();
+		vector m_New = m_Old - m_ObjectFall;
+		
+		vector m_Ray = m_Drop.GetPosition() - "0 1.1 0";
+		vector m_RayEnd = m_New;
+		
+		vector hitPos;
+		vector hitNormal;
+		int hitComponentIndex;
+		
+		if (DayZPhysics.RaycastRV(m_Ray, m_RayEnd, hitPos, hitNormal, hitComponentIndex, NULL, NULL, m_Drop))
 		{
-            GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).Remove(DropSimulation);
+			GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).Remove(DropSimulation);
             vector m_Temp = m_Drop.GetPosition();
             m_Temp[1] = m_Ground;
-            GetGame().ObjectDelete(m_Physical);
             m_Drop.SetPosition(m_Temp);
             m_Drop.PlaceOnSurface();
-            GetGame().AdminLog("<AirDrop Redux> Hit surface");
+			m_Drop.SetOrientation(hitNormal);
+            Print("<AirDrop> Container did hit the surface");
             AfterDrop();
-        } else 
+		}
+		else
 		{
-            vector m_ObjectPos;
-            m_ObjectPos[0] = m_DropPos[0];
-            m_ObjectPos[1] = m_Physical.GetPosition()[1];
-            m_ObjectPos[2] = m_DropPos[1];
-            m_Drop.SetPosition(m_ObjectPos);
-            m_Drop.SetOrientation(m_Physical.GetOrientation());
-        }
+			m_Drop.SetPosition(m_New);
+		}
     }
 	
 	void Drop() 
 	{
-        m_Motion = 0;
-        GetGame().AdminLog("<AirDrop Redux> Physics init");
-        m_Physical = EntityAI.Cast(GetGame().CreateObject( "OffroadHatchback", m_Plane.GetPosition(), true, true ));
-        m_Physical.SetAllowDamage(false);
         m_Drop = GetGame().CreateObject( "DropBox", m_Plane.GetPosition(), false, true );
         SetVelocity(m_Physical, "10 0 0");
         GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(DropSimulation, 10, true);
@@ -370,7 +375,7 @@ class AirDrop_Base
 		else 
 		{
             if(!IsInRect(m_PlanePosFixed[0], m_PlanePosFixed[1], -10.0, 15470.0, -10.0, 1570.0)) {
-                GetGame().AdminLog("<AirDrop Redux> Cleaning up");
+				Print("<AirDrop> Cleaning up");
                 GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).Remove(MovePlane);
                 GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(ResetPlane, 1000, false);
             }
