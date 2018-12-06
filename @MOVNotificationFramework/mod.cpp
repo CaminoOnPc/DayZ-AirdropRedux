@@ -1,6 +1,6 @@
 class CfgMods
 {
-	class MOV_NotificationFramework
+	class MOVNotificationFramework
 	{
 	    dir = "MOVNotificationFramework";
 	    picture = "";

@@ -1,6 +1,6 @@
 class CfgMods
 {
-	class MOV_Airdrop
+	class MOVAirdrop
 	{
 	    dir = "MOVAirdrop";
 	    picture = "";
