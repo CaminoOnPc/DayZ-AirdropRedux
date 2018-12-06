@@ -28,7 +28,6 @@ class NotificationFramework
 		m_Notification.m_AlertText = TextWidget.Cast( m_Notification.m_Alert.FindAnyWidget("NotificationText") );
 		
 		m_Notification.m_AlertIcon.LoadImageFile(0, "mov/framework/notification/images/alert.paa");
-		m_Notification.m_AlertBackground.LoadImageFile(0, "{445C37DFF35DDCBA}dta/gui/textures/left_pane_full_ca.edds");
 		m_Notification.m_Alert.Show(false);
 		m_Notification.m_AlertText.SetText("");
 	}
