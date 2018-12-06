@@ -15,45 +15,73 @@ class Notification
 
 class NotificationFramework
 {
-	ref Notification m_Notification;
-
 	void NotificationFramework()
 	{
-		m_Notification = new Notification();
+		GetNotificationClass().m_Queue = GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY); 
 		
-		m_Notification.m_Queue = GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY); 
+		GetNotificationClass().m_Alert = GetGame().GetWorkspace().CreateWidgets( "mov/framework/notification/layouts/alert.layout" );
+		GetNotificationClass().m_AlertIcon = ImageWidget.Cast( GetNotificationClass().m_Alert.FindAnyWidget("NotificationImage") );
+		GetNotificationClass().m_AlertText = TextWidget.Cast( GetNotificationClass().m_Alert.FindAnyWidget("NotificationText") );
 		
-		m_Notification.m_Alert = GetGame().GetWorkspace().CreateWidgets( "mov/framework/notification/layouts/alert.layout" );
-		m_Notification.m_AlertIcon = ImageWidget.Cast( m_Notification.m_Alert.FindAnyWidget("NotificationImage") );
-		m_Notification.m_AlertText = TextWidget.Cast( m_Notification.m_Alert.FindAnyWidget("NotificationText") );
-		
-		m_Notification.m_AlertIcon.LoadImageFile(0, "mov/framework/notification/images/alert.paa");
-		m_Notification.m_Alert.Show(false);
-		m_Notification.m_AlertText.SetText("");
+		GetNotificationClass().m_Alert.Show(false);
+		GetNotificationClass().m_AlertIcon.LoadImageFile(0, "mov/framework/notification/images/alert.paa");
+		GetNotificationClass().m_AlertText.SetText("");	
 	}
-
+	
+	void OnRPC(ParamsReadContext ctx)
+	{
+		int code;
+		string function;
+		
+		ctx.Read(code);
+		ctx.Read(function);
+		
+		if (code == 1 && function == "OnShowEveryone")
+		{
+			OnShow();
+		}
+		if (code == 2 && function == "OnHideEveryone")
+		{
+			OnHide();
+		}
+	}
+	
 	void OnShow()
 	{
+		ScriptRPC rpc = new ScriptRPC();
+		
 		if (GetGame().IsClient() || !GetGame().IsMultiplayer())
 		{
-			m_Notification.m_Alert.Show(true);
-			m_Notification.m_AlertText.SetText(m_Notification.m_Text);	
+			GetNotificationClass().m_Alert.Show(true);
+			GetNotificationClass().m_AlertText.SetText(GetNotificationClass().m_Text);	
+		}
+		if (GetGame().IsServer() && GetGame().IsMultiplayer())
+		{
+			rpc.Write(1); // 1 - Show
+			rpc.Write("OnShowEveryone");
 		}
 	}
 	
 	void OnHide()
 	{
+		ScriptRPC rpc = new ScriptRPC();
+		
 		if (GetGame().IsClient() || !GetGame().IsMultiplayer())
 		{
-			m_Notification.m_Alert.Show(false);
-			m_Notification.m_Text = "";
+			GetNotificationClass().m_Alert.Show(false);
+			GetNotificationClass().m_Text = "";
 		}	
+		if (GetGame().IsServer() && GetGame().IsMultiplayer())
+		{
+			rpc.Write(2); // 1 - Show
+			rpc.Write("OnHideEveryone");
+		}
 	}
 	
 	void ShowAlert(string l_Text, int l_Hide = 1000, int l_Delay = 0)
 	{
-		m_Notification.m_Text = l_Text;
-		m_Notification.m_Queue.CallLater(OnShow, l_Delay, false);
+		GetNotificationClass().m_Text = l_Text;
+		GetNotificationClass().m_Queue.CallLater(OnShow, l_Delay, false);
 		
 		if (l_Hide > 0)
 		{
@@ -63,6 +91,24 @@ class NotificationFramework
 	
 	void HideAlert(int l_Delay = 0)
 	{
-		m_Notification.m_Queue.CallLater(OnHide, l_Delay, false);
+		GetNotificationClass().m_Queue.CallLater(OnHide, l_Delay, false);
 	}
+}
+
+private static ref Notification g_Notification;
+private static ref Notification GetNotificationClass()
+{
+	if ( !g_Notification )
+    {
+    	 g_Notification = new ref Notification;
+    }
+}
+
+static ref NotificationFramework g_NotificationManager;
+static ref NotificationFramework GetNotificationManager()
+{
+	if ( !g_NotificationManager )
+    {
+    	 g_NotificationManager = new ref NotificationFramework;
+    }
 }
