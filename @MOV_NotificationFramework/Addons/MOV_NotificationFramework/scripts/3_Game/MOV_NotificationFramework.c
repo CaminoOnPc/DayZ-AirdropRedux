@@ -21,7 +21,7 @@ class NotificationFramework
 		
 		GetNotificationClass().m_Alert = GetGame().GetWorkspace().CreateWidgets( "mov/framework/notification/layouts/alert.layout" );
 		GetNotificationClass().m_AlertIcon = ImageWidget.Cast( GetNotificationClass().m_Alert.FindAnyWidget("NotificationImage") );
-		GetNotificationClass().m_AlertText = TextWidget.Cast( GetNotificationClass().m_Alert.FindAnyWidget("NotificationText") );
+		GetNotificationClass().m_AlertText = TextWidget.Cast(  GetNotificationClass().m_Alert.FindAnyWidget("NotificationText") );
 		
 		GetNotificationClass().m_Alert.Show(false);
 		GetNotificationClass().m_AlertIcon.LoadImageFile(0, "mov/framework/notification/images/alert.paa");
@@ -73,7 +73,7 @@ class NotificationFramework
 		}	
 		if (GetGame().IsServer() && GetGame().IsMultiplayer())
 		{
-			rpc.Write(2); // 1 - Show
+			rpc.Write(2); // 2 - Hide
 			rpc.Write("OnHideEveryone");
 		}
 	}
