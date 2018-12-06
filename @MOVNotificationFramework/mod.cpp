@@ -2,7 +2,7 @@ class CfgMods
 {
 	class MOV_NotificationFramework
 	{
-	    dir = "MOV_NotificationFramework";
+	    dir = "MOVNotificationFramework";
 	    picture = "";
 	    action = "";
 	    hideName = 1;

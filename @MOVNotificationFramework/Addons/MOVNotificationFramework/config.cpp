@@ -1,7 +1,7 @@
 // #include "BIS_AddonInfo.hpp"
 class CfgPatches
 {
-	class MOV_NotificationScripts
+	class MOVNotificationScripts
 	{
 		units[]={};
 		weapons[]={};

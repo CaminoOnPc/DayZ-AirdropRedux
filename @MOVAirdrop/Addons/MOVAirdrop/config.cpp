@@ -1,13 +1,13 @@
 // #include "BIS_AddonInfo.hpp"
 class CfgPatches
 {
-	class MOV_Airdrop
+	class MOVAirdropScripts
 	{
 		units[]={};
 		weapons[]={};
 		requiredVersion=0.1;
 		requiredAddons[]={
-			"MOV_NotificationFramework",
+			"MOVNotificationFramework",
 			"DZ_Data",
 			"DZ_Structures_Residential"	
 		};
