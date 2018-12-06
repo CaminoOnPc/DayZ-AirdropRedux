@@ -122,10 +122,11 @@ class AirDrop_Base
 	void ResetDrop()
 	{
 		 GetGame().ObjectDelete(m_Drop);
-		 m_Particle.GetCompEM().SwitchOff();
-		 m_DropParticle.GetCompEM().SwitchOff();
-		 GetGame().ObjectDelete(m_Particle);
-		 GetGame().ObjectDelete(m_DropParticle);
+		
+		 if (m_Particle)
+		 	m_Particle.GetCompEM().SwitchOff();
+		 //if (m_DropParticle)
+		 //	m_DropParticle.GetCompEM().SwitchOff();
 	}
 		
 	// In minutes
