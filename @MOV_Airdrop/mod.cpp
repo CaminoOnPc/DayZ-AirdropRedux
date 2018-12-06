@@ -15,14 +15,14 @@ class CfgMods
 	    extra = 0;
 	    type = "mod";
 
-	    dependencies[] = {"Mission", "gui"};
+	    dependencies[] = {"Mission", "Game", "gui"};
 
 	    class defs
 	    {
 			class missionScriptModule
             {
                 value = "";
-                files[] = {"mov/framework/notification/scripts/5_Mission"};
+                files[] = {"airdrop/scripts/5_Mission"};
             };
         };
     };
