@@ -10,7 +10,7 @@ class AirDrop_Places
         this.y = y;
         this.name = name;
     }
-};
+}
 
 class AirDrop_Base
 {
@@ -387,4 +387,4 @@ class AirDrop_Base
         if(x > min_x && x < max_x && y > min_y && y < max_y) return true;
         return false;
     }
-};
+}
