@@ -28,14 +28,14 @@ class CfgMods
 	    extra = 0;
 	    type = "mod";
 
-	    dependencies[] = {"Game", "gui"};
+	    dependencies[] = { "Game" };
 
 	    class defs
 	    {
 			class gameScriptModule
             {
                 value = "";
-                files[] = {"mov/framework/notification/scripts/3_Game"};
+                files[] = {"mov/scripts/3_Game"};
             };
         };
     };
