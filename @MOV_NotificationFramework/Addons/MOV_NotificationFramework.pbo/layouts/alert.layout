@@ -1,39 +1,57 @@
 FrameWidgetClass rootFrame {
- position 0.00296 0.00375
- size 0.99458 0.05
+ position 0 0
+ size 1.00009 0.062
  hexactpos 0
  vexactpos 0
  hexactsize 0
  vexactsize 0
  {
-  ImageWidgetClass NotificationFrame {
+  ImageWidgetClass NotificationImage {
    inheritalpha 1
-   color 0.3137 0.3137 0.3137 1
-   position 0.00192 0.07675
-   size 0.99667 0.83694
+   position 0.00222 0.04888
+   size 63.173 61.1884
+   hexactpos 0
+   vexactpos 0
+   hexactsize 1
+   vexactsize 1
+   priority 2
+   mode blend
+   "src alpha" 1
+   stretch 1
+  }
+  TextWidgetClass NotificationText {
+   position 0.03824 0.06053
+   size 0.95962 0.86556
    hexactpos 0
    vexactpos 0
    hexactsize 0
    vexactsize 0
-   imageTexture "{E8E5F4B852175994}dta/gui/textures/linear_gradient.edds"
+   priority 2
+   style Light
+   text "Test notification"
+   "exact text" 0
+   text_proportion 0.85
+   "size to text v" 0
+   "text valign" center
+  }
+  ImageWidgetClass NotificationImageBackground {
+   clipchildren 1
+   inheritalpha 1
+   color 0.3137 0.3137 0.3137 0.6275
+   position 0 0
+   size 1 1
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   imageTexture "{445C37DFF35DDCBA}dta/gui/textures/left_pane_full_ca.edds"
    mode blend
    "src alpha" 1
+   "no wrap" 0
    stretch 1
-   {
-    TextWidgetClass NotificationText {
-     position 0.00197 0.1122
-     size 0.99506 0.75742
-     hexactpos 0
-     vexactpos 0
-     hexactsize 0
-     vexactsize 0
-     style Light
-     text "Test notification"
-     "size to text v" 0
-     "text halign" center
-     "text valign" center
-    }
-   }
+   "flip u" 0
+   "flip v" 1
+   nocache 0
   }
  }
 }
