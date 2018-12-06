@@ -22,7 +22,13 @@ class CfgMods
 			class missionScriptModule
             {
                 value = "";
-                files[] = {"airdrop/scripts/5_Mission"};
+                files[] = {"airdrop/5_Mission"};
+            };
+			
+			class gameScriptModule
+            {
+                value = "";
+                files[] = {"mov/framework/notification/scripts/3_Game"};
             };
         };
     };
