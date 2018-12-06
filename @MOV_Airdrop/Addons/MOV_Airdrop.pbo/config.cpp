@@ -40,38 +40,3 @@ class CfgSounds
 		};
 	};
 };
-class CfgMods
-{
-	class Airdrop
-	{
-	    dir = "Airdrop";
-	    picture = "";
-	    action = "";
-	    hideName = 1;
-	    hidePicture = 1;
-	    name = "Airdrop Redux";
-	    credits = "philipp";
-	    author = "mov3ax";
-	    authorID = "0";
-	    version = "1.0";
-	    extra = 0;
-	    type = "mod";
-
-	    dependencies[] = {"Mission", "Game"};
-
-	    class defs
-	    {
-			class gameScriptModule
-            {
-                value = "";
-                files[] = {"airdrop/3_Game"};
-            };
-			
-	        class missionScriptModule
-            {
-                value = "";
-                files[] = {"airdrop/5_Mission"};
-            };
-        };
-    };
-};
