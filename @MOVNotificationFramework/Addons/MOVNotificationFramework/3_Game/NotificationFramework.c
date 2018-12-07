@@ -82,11 +82,7 @@ class NotificationFramework
 
         if( type == CallType.Server )
         {
-			Print("<Notification> Server");
-        }
-        else
-        {
-			ShowAlertClient(data.param1, data.param2, data.param3);
+			Print("<NotificationFramewok> Server");
         }
 	}
 	
