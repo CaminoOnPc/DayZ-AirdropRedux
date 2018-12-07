@@ -24,8 +24,8 @@ class NotificationFramework
 	
 	void NotificationFramework()
 	{
-		GetRPCManager().AddRPC( "MOVNotificationFramework", "ShowFunction", this, SingeplayerExecutionType.Client );
-		GetRPCManager().AddRPC( "MOVNotificationFramework", "HideFunction", this, SingeplayerExecutionType.Client );
+		GetRPCManager().AddRPC( "MOVNotificationFramework", "ShowFunction", this, SingeplayerExecutionType.Both );
+		GetRPCManager().AddRPC( "MOVNotificationFramework", "HideFunction", this, SingeplayerExecutionType.Both );
 		
 		m_Notification = new NotificationMeta();
 		
@@ -45,30 +45,27 @@ class NotificationFramework
 	
 	void ShowFunction( CallType type, ref ParamsReadContext ctx, ref PlayerIdentity sender, ref Object target )
     {
-		Param1< int > delay;
-		if ( !ctx.Read( delay ) ) delay.param1 = 0;
-		
-		Param1< int > hide;
-		if ( !ctx.Read( hide ) ) hide.param1 = 1000;
-		
-        Param1< string > data;
+		Param3< string, int, int > data;
         if ( !ctx.Read( data ) ) return;
-        
+		
+		if (data.param2 == 0)
+		data.param2 = 1000;
+
         if( type == CallType.Server )
         {
-			Print("<NotificationFramework> Server");
+			Print("<NotificationFramework1> Server");
         }
         else
         {
-           	Print("<NotificationFramework> Client");
-			ShowAlertClient(data.param1, hide.param1, delay.param1);
+           	Print("<NotificationFramework1> Client");
+			ShowAlertClient(data.param1, data.param2, data.param3);
         }
     }
 	
 	void HideFunction( CallType type, ref ParamsReadContext ctx, ref PlayerIdentity sender, ref Object target )
     {
-		Param1< int > delay;
-		if ( !ctx.Read( delay ) ) delay.param1 = 0;
+		Param1< int > data;
+		if ( !ctx.Read( data ) ) data.param1 = 0;
         
         if( type == CallType.Server )
         {
@@ -127,7 +124,7 @@ static ref NotificationFramework GetNotificationManager()
 {
 	if ( !g_NotificationManager )
     {
-    	 g_NotificationManager = new ref NotificationFramework;
+    	 g_NotificationManager = new ref NotificationFramework();
     }
 	
 	return g_NotificationManager;
