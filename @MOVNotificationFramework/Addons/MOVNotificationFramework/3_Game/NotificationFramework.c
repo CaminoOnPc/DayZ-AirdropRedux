@@ -28,15 +28,17 @@ class NotificationFramework
 	
 	void NotificationFramework()
 	{
+		Print("<NotificationFramework> Server");
+		
 		GetRPCManager().AddRPC( "MOVNotificationFramework", "ShowFunction", this, SingeplayerExecutionType.Server );
 		GetRPCManager().AddRPC( "MOVNotificationFramework", "HideFunction", this, SingeplayerExecutionType.Server );
 		
 		m_Notification = new NotificationMeta;
 		
-		GetDayZGame().Event_OnRPC.Insert( OnRPC );
-		
 		if (GetGame().IsClient() || !GetGame().IsMultiplayer())
 		{
+			GetDayZGame().Event_OnRPC.Insert( OnRPC );
+		
 			m_Notification.m_Queue = GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY); 
 		
 			m_Notification.m_Alert = GetGame().GetWorkspace().CreateWidgets( "mov/scripts/layouts/alert.layout" );
@@ -80,7 +82,7 @@ class NotificationFramework
 
         if( type == CallType.Server )
         {
-			Print("<NotificationFramework_Test1> Server");
+			Print("<Notification> Server");
         }
         else
         {
