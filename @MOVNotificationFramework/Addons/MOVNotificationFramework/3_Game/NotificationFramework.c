@@ -67,7 +67,7 @@ class NotificationFramework
 		{
 			if (data.param4 == NotificationType.Show)
 				ShowAlertClient(data.param1, data.param2, data.param3);
-			if (data.param4 == NotificationType.Hide)
+			else
 				HideAlertClient(data.param3);
 		}
 	}
