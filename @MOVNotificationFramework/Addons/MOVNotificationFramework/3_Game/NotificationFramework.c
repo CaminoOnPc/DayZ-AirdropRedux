@@ -20,10 +20,12 @@ class NotificationFramework
 	
 	void NotificationFramework()
 	{
-		GetRPCManager().AddRPC( "MOVNotificationFramework", "ShowFunction", this, SingeplayerExecutionType.Both );
-		GetRPCManager().AddRPC( "MOVNotificationFramework", "HideFunction", this, SingeplayerExecutionType.Both );
+		GetRPCManager().AddRPC( "MOVNotificationFramework", "ShowFunction", this, SingeplayerExecutionType.Server );
+		GetRPCManager().AddRPC( "MOVNotificationFramework", "HideFunction", this, SingeplayerExecutionType.Server );
 		
 		m_Notification = new NotificationMeta;
+		
+		GetDayZGame().Event_OnRPC.Insert( OnRPC );
 		
 		if (GetGame().IsClient() || !GetGame().IsMultiplayer())
 		{
@@ -41,9 +43,28 @@ class NotificationFramework
 		}
 	}
 	
-	void ShowFunction( CallType type, ref ParamsReadContext ctx, ref PlayerIdentity sender, ref Object target )
+	void OnRPC( PlayerIdentity sender, Object target, int rpc_type, ParamsReadContext ctx )
     {
-		Param3< string, int, int > data;
+		if( rpc_type != FRAMEWORK_RPC_ID )
+        {
+            return;
+        }
+		
+		Param4< string, int, int, int > data;
+		ctx.Read( data );
+		
+		if (GetGame().IsClient() || !GetGame().IsMultiplayer())
+		{
+			if (data.param4 == NotificationType.Show)
+				ShowAlertClient(data.param1, data.param2, data.param3);
+			if (data.param4 == NotificationType.Hide)
+				HideAlertClient(data.param3);
+		}
+	}
+	
+	void Transfer(CallType type, ref ParamsReadContext ctx, ref PlayerIdentity sender, ref Object target)
+	{
+		Param4< string, int, int, int > data;
         if ( !ctx.Read( data ) ) return;
 		
 		if (data.param2 == 0)
@@ -51,30 +72,13 @@ class NotificationFramework
 
         if( type == CallType.Server )
         {
-			Print("<NotificationFramework1> Server");
+			Print("<NotificationFramework_Test1> Server");
         }
         else
         {
-           	Print("<NotificationFramework1> Client");
 			ShowAlertClient(data.param1, data.param2, data.param3);
         }
-    }
-	
-	void HideFunction( CallType type, ref ParamsReadContext ctx, ref PlayerIdentity sender, ref Object target )
-    {
-		Param1< int > data;
-		if ( !ctx.Read( data ) ) data.param1 = 0;
-        
-        if( type == CallType.Server )
-        {
-			Print("<NotificationFramework> Server");
-        }
-        else
-        {
-           	Print("<NotificationFramework> Client");
-			HideAlertClient(data.param1);
-        }
-    }
+	}
 	
 	void OnShowAlertClient()
 	{
@@ -108,12 +112,12 @@ class NotificationFramework
 	
 	void ShowAlert(string l_Text, int l_Hide = 1000, int l_Delay = 0)
 	{
-		GetRPCManager().SendRPC( "MOVNotificationFramework", "ShowFunction", new Param3< string, int, int >( l_Text, l_Hide, l_Delay ) );
+		GetRPCManager().SendRPC( "MOVNotificationFramework", "Transfer", new Param4< string, int, int, int >( l_Text, l_Hide, l_Delay, NotificationType.Show ) );
 	}
 	
 	void HideAlert(int l_Delay = 0)
 	{
-		GetRPCManager().SendRPC( "MOVNotificationFramework", "HideFunction", new Param1< int >( l_Delay ) );
+		GetRPCManager().SendRPC( "MOVNotificationFramework", "Transfer", new Param4< string, int, int, int >( "", 1000, l_Delay, NotificationType.Hide ) );
 	}
 }
 
