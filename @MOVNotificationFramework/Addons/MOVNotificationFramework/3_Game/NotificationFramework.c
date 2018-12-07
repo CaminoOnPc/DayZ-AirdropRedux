@@ -80,6 +80,8 @@ class NotificationFramework
 	
 	void OnShowAlertClient()
 	{
+		HideAlertClient(0);
+
 		m_Notification.m_Alert.Show(true);
 		m_Notification.m_AlertText.SetText(m_Notification.m_Text);	
 	}
