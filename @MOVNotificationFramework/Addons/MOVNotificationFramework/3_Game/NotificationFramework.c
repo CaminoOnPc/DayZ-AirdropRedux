@@ -74,7 +74,7 @@ class NotificationFramework
         else
         {
            	Print("<NotificationFramework> Client");
-			HideAlertClient(delay.param1);
+			HideAlertClient(data.param1);
         }
     }
 	
