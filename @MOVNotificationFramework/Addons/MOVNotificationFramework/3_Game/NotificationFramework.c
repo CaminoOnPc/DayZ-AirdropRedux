@@ -14,8 +14,7 @@ class NotificationMeta
 	ScriptCallQueue m_Queue;
 	
 	void NotificationMeta()
-	{
-				
+	{		
 	}
 }
 
@@ -30,15 +29,18 @@ class NotificationFramework
 		
 		m_Notification = new NotificationMeta();
 		
-		m_Notification.m_Queue = GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY); 
+		if (GetGame().IsClient() || !GetGame().IsMultiplayer())
+		{
+			m_Notification.m_Queue = GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY); 
 		
-		m_Notification.m_Alert = GetGame().GetWorkspace().CreateWidgets( "mov/scripts/layouts/alert.layout" );
-		m_Notification.m_AlertIcon = ImageWidget.Cast( m_Notification.m_Alert.FindAnyWidget("NotificationImage") );
-		m_Notification.m_AlertText = TextWidget.Cast( m_Notification.m_Alert.FindAnyWidget("NotificationText") );
+			m_Notification.m_Alert = GetGame().GetWorkspace().CreateWidgets( "mov/scripts/layouts/alert.layout" );
+			m_Notification.m_AlertIcon = ImageWidget.Cast( m_Notification.m_Alert.FindAnyWidget("NotificationImage") );
+			m_Notification.m_AlertText = TextWidget.Cast( m_Notification.m_Alert.FindAnyWidget("NotificationText") );
 		
-		m_Notification.m_Alert.Show(false);
-		m_Notification.m_AlertIcon.LoadImageFile(0, "mov/scripts/images/alert.paa");
-		m_Notification.m_AlertText.SetText("");
+			m_Notification.m_Alert.Show(false);
+			m_Notification.m_AlertIcon.LoadImageFile(0, "mov/scripts/images/alert.paa");
+			m_Notification.m_AlertText.SetText("");
+		}
 	}
 	
 	void ShowFunction( CallType type, ref ParamsReadContext ctx, ref PlayerIdentity sender, ref Object target )
