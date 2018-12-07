@@ -1,3 +1,11 @@
+protected const int FRAMEWORK_RPC_ID = 10042;
+
+enum NotificationType
+{
+    Show = 0,
+    Hide
+}
+
 class NotificationMeta
 {
 	ImageWidget m_AlertBackground;
