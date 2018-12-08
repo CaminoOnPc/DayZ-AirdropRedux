@@ -16,7 +16,7 @@ class AirDrop_Places
 
 class AirDrop_Base
 {
-	ref AirDrop_Settings m_Settings;
+	ref AirDrop_Settings m_Settings = new AirDrop_Settings();
 	
 	void SendMessage(string message) 
 	{
@@ -64,6 +64,8 @@ class AirDrop_Base
 	{	
 		if (GetGame().IsServer() || !GetGame().IsMultiplayer())
 		{
+			m_Settings = new AirDrop_Settings();
+			
 			ResetPlane();
 		
 			GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(InitPlane, m_Settings.m_Initial * 60 * 1000, false);
