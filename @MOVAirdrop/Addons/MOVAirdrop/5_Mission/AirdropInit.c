@@ -4,6 +4,9 @@ modded class MissionServer
 	
     void MissionServer()
     {
+		Print("<AirDrop> MissionServer::MissionServer()");
+		
+		m_Airdrop = null;
         m_Airdrop = new AirDrop_Base();
     }
 }
@@ -14,6 +17,9 @@ modded class MissionGameplay
 	
     void MissionGameplay()
     {
+		Print("<AirDrop> MissionGameplay::MissionGameplay()");
+		
+		m_Airdrop = null;
         m_Airdrop = new AirDrop_Base();
     }
 }

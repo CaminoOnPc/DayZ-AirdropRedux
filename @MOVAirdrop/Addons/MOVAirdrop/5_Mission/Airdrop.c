@@ -113,7 +113,8 @@ class AirDrop_Base
 		m_Landed = false;
 		m_Enabled = false;
 		
-		GetGame().AdminLog("<AirDrop Redux> :ResetPlane");
+		Print("<AirDrop> Airplane vanished");
+		
 		SendMessage("The airplane has been vanished");
 	}
 	
