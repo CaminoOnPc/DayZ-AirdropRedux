@@ -7,8 +7,8 @@ class CfgPatches
 		weapons[]={};
 		requiredVersion=0.1;
 		requiredAddons[]={
-			"DZ_Data",
-			"RPC_Scripts"
+			"RPC_Scripts",
+			"DZ_Data"
 		};
 	};
 };
@@ -29,14 +29,19 @@ class CfgMods
 	    extra = 0;
 	    type = "mod";
 
-	    dependencies[] = { "Game" };
+	    dependencies[] = { "World", "Mission" };
 
 	    class defs
 	    {
-			class gameScriptModule
+			class worldScriptModule
             {
                 value = "";
-                files[] = {"mov/scripts/3_Game"};
+                files[] = {"mov/scripts/4_World"};
+            };
+			class missionScriptModule
+            {
+                value = "";
+                files[] = {"mov/scripts/5_Mission"};
             };
         };
     };
