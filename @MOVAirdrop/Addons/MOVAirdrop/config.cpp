@@ -58,11 +58,11 @@ class CfgSounds
 		name="";
 		titles[]={};
 	};
-	class airplaneLoop: default
+	class AirPlaneLoop: default
 	{
 		sound[]=
 		{
-			"\DZ\sounds\vehicles\v3s\v3s_Engine_Ext_Rpm0",
+			"\airdrop\sounds\AirPlane",
 			0.63095737,
 			1,
 			1000

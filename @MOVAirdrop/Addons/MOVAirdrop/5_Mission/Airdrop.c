@@ -119,23 +119,25 @@ class AirDrop_Base
         m_PlaneStartPos[2] = m_PlaneSpawn[1];
         m_Plane.SetPosition(m_PlaneStartPos);
 		
+		m_Sound = m_Plane.PlaySoundLoop("AirPlaneLoop", 1000, false);
+		
 		AirDrop_Places m_DefaultAirDropPlaces = new AirDrop_Places(2760.0, 5527.0, "Default");	
 		
-		if(m_SpawnCount < 1) 
+		if(m_Settings.m_SpawnCount < 1) 
 		{
 			Print("<AirDrop> Spawning places count is lower than one");
 			m_ActiveAirDropPlaces = m_DefaultAirDropPlaces;
 		}
 		else
 		{
-			m_ActiveAirDropPlaces = m_AirDropPlaces[Math.RandomInt(0, m_SpawnCount - 1)];
+			m_ActiveAirDropPlaces = m_Settings.m_AirDropPlaces[Math.RandomInt(0, m_Settings.m_SpawnCount - 1)];
 		}
 		
 		vector m_Temp;
         m_Temp[0] = m_ActiveAirDropPlaces.x;
         m_Temp[1] = GetGame().SurfaceY(m_ActiveAirDropPlaces.x, m_ActiveAirDropPlaces.y) + 1;
         m_Temp[2] = m_ActiveAirDropPlaces.y;
-		
+			
 		SendMessage("The airplane is heading towards " + m_ActiveAirDropPlaces.name);
 		
 		m_DropPos[0] = m_ActiveAirDropPlaces.x;
@@ -185,7 +187,7 @@ class AirDrop_Base
             m_DynamicPos[0] = m_DynamicPos[0]+(r * Math.Cos(a));
             m_DynamicPos[2] = m_DynamicPos[2]+(r * Math.Sin(a));
             m_DynamicPos[1] = GetGame().SurfaceY(m_DynamicPos[0], m_DynamicPos[2]) + 0.3;
-            string m_Item = GetRandomLoot();
+            string m_Item = m_Settings.GetRandomLoot();
             GetGame().CreateObject(m_Item, m_DynamicPos, false, true);
         }
         for ( int m_Zombie = 0; m_Zombie < m_Settings.m_Infected; m_Zombie++ ) 
@@ -193,7 +195,7 @@ class AirDrop_Base
             m_DynamicPos = m_Base;
             m_DynamicPos[0] = m_DynamicPos[0] + Math.RandomFloat(-20.0, 20.0);
             m_DynamicPos[2] = m_DynamicPos[2] + Math.RandomFloat(-20.0, 20.0);
-            GetGame().CreateObject( WorkingZombieClasses().GetRandomElement(), m_DynamicPos, false, true );
+            GetGame().CreateObject( m_Settings.WorkingZombieClasses().GetRandomElement(), m_DynamicPos, false, true );
         }
     }
 	
@@ -260,8 +262,6 @@ class AirDrop_Base
 		m_PlanePosFixed[1] = GetGame().SurfaceY(m_PlanePosFixed[0], m_PlanePosFixed[2]) + m_Settings.m_Height;
 		
 		m_Plane.SetPosition(m_PlanePosFixed);
-		
-		m_Sound = m_Plane.PlaySoundLoop("airplaneLoop", 1000, false);
 		
 		if(!m_Landed) 
 		{
