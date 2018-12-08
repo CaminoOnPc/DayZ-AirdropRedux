@@ -1,6 +1,6 @@
 class AirDrop_Settings
 {
-	TStringArray WorkingZombieClasses()
+	TStringArray WorkingZombieClasses() // List of zombie types that will spawn around airdrop
 	{
 		return {
 		"ZmbM_HermitSkinny_Base","ZmbM_HermitSkinny_Beige","ZmbM_HermitSkinny_Black","ZmbM_HermitSkinny_Green",
@@ -50,7 +50,7 @@ class AirDrop_Settings
 		};
 	}
 	
-	string GetRandomLoot() 
+	string GetRandomLoot()  // Items which will spawn in airdrop
 	{
 		TStringArray loot = {
 		"LandMineTrap", 
@@ -65,10 +65,8 @@ class AirDrop_Settings
 		return loot.GetRandomElement();
 	}
 	
-	int m_SpawnCount = 4;
-	
-	ref AirDrop_Places m_AirDropPlaces[] = {
-        new AirDrop_Places(4807, 9812, "northwest airfield"),
+	ref AirDrop_Places m_AirDropPlaces[] = { // Places where airdrop will fall, x, y axis and name of location
+        new AirDrop_Places(4807, 9812, "northwest airfield"), 
 		AirDrop_Places(11464, 8908, "berezino"),
 		AirDrop_Places(12159, 12583, "krasnostav"),
 		AirDrop_Places(5043, 2505, "balota"),
@@ -84,14 +82,16 @@ class AirDrop_Settings
 		AirDrop_Places(5823, 7764, "stary sobor"),
     };	
 	
-	float m_Interval = 60.0; // Default: 60, In minutes
-    float m_Initial = 60.0; // Default: 60, In minutes 
+	int m_SpawnCount = 14; // In how many points airdrop will fall, count it from list above
 	
-	int m_Items = 7; // Default: 7
-	int m_Infected = 15; // Default: 15
+	float m_Interval = 3.0; // Time in minutes from server start to first airdrop spawn
+    float m_Initial = 0.01; // Time in mutires how ofter airdrop will spawn
 	
-	float m_FallSpeed = 0.2; // Default: 0.2, In meters per tick
-	float m_Speed = 1.0; // Default: 1, in meters per tick (looks bad if you put it more than 1)
-	float m_Height = 300; // Default: 300, In meters above surface
+	int m_Items = 7; // Items count in airdrop
+	int m_Infected = 15; // Infected count around airdrop
+	
+	float m_FallSpeed = 0.2; // Airdrop fall speed in meters per second
+	float m_Speed = 1.0; // Airplane speed in meters per second
+	float m_Height = 300; // Airplane fly height above surface
 	
 }
