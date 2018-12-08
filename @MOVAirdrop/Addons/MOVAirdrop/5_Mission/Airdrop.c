@@ -130,8 +130,8 @@ class AirDrop_Base
 	}
 		
 	// In minutes
-	float m_Interval = 3.0;
-    float m_Initial = 0.01; 
+	float m_Interval = 60.0;
+    float m_Initial = 60.0; 
 
 	void AirDrop_Base() 
 	{	
