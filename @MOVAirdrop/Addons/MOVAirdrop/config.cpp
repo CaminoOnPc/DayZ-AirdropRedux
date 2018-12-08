@@ -63,7 +63,7 @@ class CfgSounds
 		sound[]=
 		{
 			"\DZ\sounds\vehicles\v3s\V3S_Engine_Ext_Rpm2",
-			1,
+			0.63095737,
 			1,
 			1000
 		};
