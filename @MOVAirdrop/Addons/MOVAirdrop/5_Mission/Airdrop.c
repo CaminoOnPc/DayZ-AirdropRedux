@@ -90,7 +90,7 @@ class AirDrop_Base
 	
 	void SendMessage(string message) 
 	{
-		m_NotificationFramework.ShowAlert(message, 3000);
+		GetNotificationManager().ShowAlert(message, 3000);
 	}
 	
 	Object m_Plane;
@@ -130,34 +130,33 @@ class AirDrop_Base
 	}
 		
 	// In minutes
-	float m_Interval = 60.0;
-    float m_Initial = 60.0; 
+	float m_Interval = 3.0;
+    float m_Initial = 0.01; 
 
-	ref NotificationFramework m_NotificationFramework;
-		
 	void AirDrop_Base() 
 	{	
-		if (GetGame().ConfigIsExisting("airdropInterval"))		
-			m_Interval = GetGame().ConfigGetInt("airdropInterval");
-		if (GetGame().ConfigIsExisting("airdropInitial"))		
-			m_Initial = GetGame().ConfigGetInt("airdropInitial");	
-		if (GetGame().ConfigIsExisting("airdropSpeed"))		
-			m_FallSpeed = GetGame().ConfigGetInt("airdropFallSpeed");
-		if (GetGame().ConfigIsExisting("airdropSpeed"))		
-			m_FallSpeed = GetGame().ConfigGetInt("airdropFallSpeed");
-		if (GetGame().ConfigIsExisting("airdropHeight"))		
-			m_Height = GetGame().ConfigGetInt("airdropHeight");
-		if (GetGame().ConfigIsExisting("airdropItems"))		
-			m_Items = GetGame().ConfigGetInt("airdropItems");
-		if (GetGame().ConfigIsExisting("airdropInfected"))		
-			m_Infected = GetGame().ConfigGetInt("airdropInfected");	
+		if (GetGame().IsServer() || !GetGame().IsMultiplayer())
+		{
+			if (GetGame().ConfigIsExisting("airdropInterval"))		
+				m_Interval = GetGame().ConfigGetFloat("airdropInterval");
+			if (GetGame().ConfigIsExisting("airdropInitial"))		
+				m_Initial = GetGame().ConfigGetFloat("airdropInitial");	
+			if (GetGame().ConfigIsExisting("airdropSpeed"))		
+				m_FallSpeed = GetGame().ConfigGetInt("airdropFallSpeed");
+			if (GetGame().ConfigIsExisting("airdropSpeed"))		
+				m_FallSpeed = GetGame().ConfigGetInt("airdropFallSpeed");
+			if (GetGame().ConfigIsExisting("airdropHeight"))		
+				m_Height = GetGame().ConfigGetInt("airdropHeight");
+			if (GetGame().ConfigIsExisting("airdropItems"))		
+				m_Items = GetGame().ConfigGetInt("airdropItems");
+			if (GetGame().ConfigIsExisting("airdropInfected"))		
+				m_Infected = GetGame().ConfigGetInt("airdropInfected");	
+
+			ResetPlane();
 		
-		m_NotificationFramework = new NotificationFramework();
-		
-		ResetPlane();
-		
-		GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(InitPlane, m_Initial * 60 * 1000, false);
-		Print("<AirDrop> Initializing");
+			GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(InitPlane, m_Initial * 60 * 1000, false);
+			Print("<AirDrop> Initializing");
+		}
 	}
 	
 	void InitPlane() 
@@ -387,4 +386,15 @@ class AirDrop_Base
         if(x > min_x && x < max_x && y > min_y && y < max_y) return true;
         return false;
     }
+}
+
+static ref AirDrop_Base g_AirdropBase;
+static ref AirDrop_Base GetAirdropBase()
+{
+    if ( !g_AirdropBase )
+    {
+         g_AirdropBase = new ref AirDrop_Base();
+    }
+    
+    return g_AirdropBase;
 }
