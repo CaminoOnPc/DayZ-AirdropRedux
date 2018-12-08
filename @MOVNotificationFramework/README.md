@@ -4,7 +4,7 @@ Notification Framework allows send notifications to screen of players with any t
 
 ## How To Use
 
-This is how you would use this framework within your mod. 
+This is how you would use this framework within your mod.
 
 ### Setup
 
@@ -41,13 +41,13 @@ GetNotificationManager().ShowAlert("Welcome!", 1000, 0);
 
 * For the string variable 'Welcone' you would add your text.
 * For the int variable '1000' you would add the hide time.
-* For the int variable '0' you would add the delay. 
+* For the int variable '0' you would add the delay.
 
 ```java
 GetNotificationManager().HideAlert(1000);
 ```
 
-* For the int variable '1000' you would add the delay. 
+* For the int variable '1000' you would add the delay.
 
 ### Example
 
