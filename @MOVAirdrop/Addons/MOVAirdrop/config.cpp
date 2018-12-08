@@ -62,10 +62,10 @@ class CfgSounds
 	{
 		sound[]=
 		{
-			"\DZ\sounds\vehicles\v3s\V3S_Engine_Ext_Rpm2",
-			0.63095737,
+			"\airdrop\airplane",
 			1,
-			1000
+			1,
+			2000
 		};
 	};
 };
