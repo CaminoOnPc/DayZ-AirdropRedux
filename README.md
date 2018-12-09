@@ -22,7 +22,7 @@ Open the **@MOVAirdrop** folder and there you would see **AirdropSettings.c** fi
 * Variable Initial return how much time will pass from server start to first AirDrop spawn.
 * Variable Items return how many items will spawn in AirDrop.
 * Variable Infected return how many infected will spawn around AirDrop.
-* Variable FallSpeed return how fast AirDrop will fall.
+* Variable Mass return mass of AirDrop container.
 * Variable Speed return how fast Airplane will fly.
 * Variable Height return how high Airplane will fly above the surface.
 

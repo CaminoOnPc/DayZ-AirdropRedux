@@ -45,10 +45,10 @@ class CfgMods
 class CfgVehicles 
 {
 	class HouseNoDestruct;
-	class DropBox: HouseNoDestruct
+	class AirDropContainer: HouseNoDestruct
 	{
 		scope=1;
-		model="\DZ\structures\residential\Misc\Misc_BoxWooden.p3d";
+		model="\airdrop\container.p3d";
 	};
 };
 class CfgSounds
@@ -66,6 +66,16 @@ class CfgSounds
 			1,
 			1,
 			2000
+		};
+	};
+	class AirPlaneAlarm: default
+	{
+		sound[]=
+		{
+			"\airdrop\alarm",
+			1,
+			1,
+			1000
 		};
 	};
 };
