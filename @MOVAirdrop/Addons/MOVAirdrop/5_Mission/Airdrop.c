@@ -17,7 +17,7 @@ class AirDrop_Places
 class AirDrop_Base
 {
 	ref AirDrop_Settings m_Settings = new AirDrop_Settings();
-	
+
 	void SendMessage(string message) 
 	{
 		GetNotificationManager().ShowAlert(message, 3000);
@@ -157,6 +157,7 @@ class AirDrop_Base
 		GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(MovePlane, 20, true);
 	}
 	
+	ref AirdropSignal m_Signal;
 	
 	EntityAI m_Physical;
 	EntityAI m_Particle;
@@ -166,17 +167,7 @@ class AirDrop_Base
 	{
         vector m_Base = m_Drop.GetPosition(), m_DynamicPos;
 		
-		/*
-		TODO: Modded class for LandMineTrap to remove delay
-		
-		m_DropParticle = EntityAI.Cast(GetGame().CreateObject( "LandMineTrap", m_Drop.GetPosition())); 
-        m_DropParticle.SetOrientation("0 0 0");
-        m_DropParticle.GetCompEM().SwitchOn(); 
-        m_DropParticle.Delete();
-		m_DropParticle.GetCompEM().SwitchOff(); 
-		*/
-		
-		AirdropSignal.m_Color = m_Settings.m_Color
+		m_Signal.m_Color = m_Settings.m_Color;
 		
 		m_Particle = EntityAI.Cast(GetGame().CreateObject( "AirdropSignal", m_Drop.GetPosition())); 
         m_Particle.SetOrientation("0 0 0");

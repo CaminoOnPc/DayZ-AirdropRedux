@@ -10,6 +10,11 @@ class AirdropSignal : ItemGrenade
 	
 	int m_Color;
 	
+	void AirdropSignal()
+	{
+		m_Color = 0;
+	}
+	
 	// When the flare starts burning
 	override void OnWorkStart()
 	{

@@ -25,6 +25,9 @@ Open the **@MOVAirdrop** folder and there you would see **AirdropSettings.c** fi
 * Variable Mass return mass of AirDrop container.
 * Variable Speed return how fast Airplane will fly.
 * Variable Height return how high Airplane will fly above the surface.
+* Variable Signal return will AirDrop showing up with signal.
+* Variable Color return color of AirDrop signal (0 - Green, 1 - Orange, 2 - Purple, 3 - Red, 4 - White). 
+
 
 ## Contributors
 
