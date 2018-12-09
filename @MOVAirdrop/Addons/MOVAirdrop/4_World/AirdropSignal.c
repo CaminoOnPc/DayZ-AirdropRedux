@@ -6,6 +6,8 @@ class AirdropSignal : ItemGrenade
 	Particle 				m_ParRed;
 	Particle 				m_ParWhite;
 	
+	static protected vector			m_FlameLocalPos = "0 0.28 0";
+	
 	int m_Color;
 	
 	// When the flare starts burning
