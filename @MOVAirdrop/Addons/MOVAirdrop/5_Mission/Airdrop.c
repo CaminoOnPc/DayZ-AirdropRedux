@@ -180,17 +180,11 @@ class AirDrop_Base
         m_Particle.SetOrientation("0 0 0");
         m_Particle.GetCompEM().SwitchOn(); 
         m_Particle.Delete();
-		
+
         for(int i = 0; i < m_Settings.m_Items; i++) 
 		{
-            float a = Math.RandomFloat(0.4, 1.0) * 2 * Math.PI;
-            float r = 5.0 * Math.Sqrt(Math.RandomFloat(0.4, 1.0));
-            m_DynamicPos = m_Base;
-            m_DynamicPos[0] = m_DynamicPos[0]+(r * Math.Cos(a));
-            m_DynamicPos[2] = m_DynamicPos[2]+(r * Math.Sin(a));
-            m_DynamicPos[1] = GetGame().SurfaceY(m_DynamicPos[0], m_DynamicPos[2]) + 0.3;
             string m_Item = m_Settings.GetRandomLoot();
-            GetGame().CreateObject(m_Item, m_DynamicPos, false, true);
+            m_Drop.GetInventory().CreateInInventory(m_Item);
         }
         for ( int m_Zombie = 0; m_Zombie < m_Settings.m_Infected; m_Zombie++ ) 
 		{
