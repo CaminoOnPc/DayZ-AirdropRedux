@@ -16,19 +16,23 @@ class AirdropSignal : ItemGrenade
 		if (m_Color == 0)
 			m_ParGreen = Particle.Play(ParticleList.AIRDROP_GREEN, this, m_FlameLocalPos);
 		if (m_Color == 1)
-			m_ParGreen = Particle.Play(ParticleList.AIRDROP_ORANGE, this, m_FlameLocalPos);
+			m_ParOrange = Particle.Play(ParticleList.AIRDROP_ORANGE, this, m_FlameLocalPos);
 		if (m_Color == 2)
-			m_ParGreen = Particle.Play(ParticleList.AIRDROP_PURPLE, this, m_FlameLocalPos);
+			m_ParPurple = Particle.Play(ParticleList.AIRDROP_PURPLE, this, m_FlameLocalPos);
 		if (m_Color == 3)
-			m_ParGreen = Particle.Play(ParticleList.AIRDORP_RED, this, m_FlameLocalPos);
+			m_ParRed = Particle.Play(ParticleList.AIRDROP_RED, this, m_FlameLocalPos);
 		if (m_Color == 4)
-			m_ParGreen = Particle.Play(ParticleList.AIRDROP_WHITE, this, m_FlameLocalPos);
+			m_ParWhite = Particle.Play(ParticleList.AIRDROP_WHITE, this, m_FlameLocalPos);
 	}
 	
 	// When the flare stops burning
 	override void OnWorkStop()
 	{
-		DestroyParticle( m_ParMainFire );
+		DestroyParticle( m_ParGreen );
+		DestroyParticle( m_ParOrange );
+		DestroyParticle( m_ParPurple );
+		DestroyParticle( m_ParRed );
+		DestroyParticle( m_ParWhite );
 		
 		Explode();
 	}
