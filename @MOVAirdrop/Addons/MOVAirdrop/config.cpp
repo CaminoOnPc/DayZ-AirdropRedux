@@ -44,19 +44,11 @@ class CfgMods
 };
 class CfgVehicles 
 {
-	class Inventory_Base;
-	class AirDropContainer: Inventory_Base
+	class HouseNoDestruct;
+	class AirDropContainer_House: HouseNoDestruct
 	{
-		scope=2;
-		displayName="AirDrop";
-		descriptionShort="AirDrop container was recently dropped by a plane, may contain loot in it";
+		scope=1;
 		model="\airdrop\container.p3d";
-		class Cargo
-		{
-			itemsCargoSize[]={10,60};
-			openable=0;
-			allowOwnedCargoManipulation=1;
-		};
 	};
 };
 class CfgSounds
