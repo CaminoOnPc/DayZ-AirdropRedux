@@ -12,12 +12,11 @@ First of all you have to download [Notification Framework](https://github.com/mo
 
 ### Configuration
 
-Open the **@MOVAirdrop** folder and there you would see **AirdropSettings.c** file. In that **AirdropSettings.c** file you can adjust following variables.
+Open the **@MOVAirdrop** folder and there you would see **Settings** folder. In that **Settings** folder you can adjust following variables from two different files.
 
-* Function WorkingZombieClasses returns types of infected which in will spawn around AirDrop when AirDrop will land. 
-* Function GetRandomLoot return type of items which will spawn in AirDrop.
-* Array AirDropPlaces return places where AirDrop can land.
-* Variable SpawnCount return amount of places where AirDrop can land.
+File **AirdropSettings.c** contains following parameters:
+
+* Array Loot return type of items which will spawn in AirDrop.
 * Variable Interval return how ofter AirDrop will fly.
 * Variable Initial return how much time will pass from server start to first AirDrop spawn.
 * Variable Items return how many items will spawn in AirDrop.
@@ -25,9 +24,11 @@ Open the **@MOVAirdrop** folder and there you would see **AirdropSettings.c** fi
 * Variable Mass return mass of AirDrop container.
 * Variable Speed return how fast Airplane will fly.
 * Variable Height return how high Airplane will fly above the surface.
-* Variable Signal return will AirDrop showing up with signal.
-* Variable Color return color of AirDrop signal (0 - Green, 1 - Orange, 2 - Purple, 3 - Red, 4 - White). 
 
+File **AirdropPlaces.c** contains following parameters:
+
+* Array AirDropPlaces return places where AirDrop can land.
+* Variable SpawnCount return amount of places where AirDrop can land.
 
 ## Contributors
 

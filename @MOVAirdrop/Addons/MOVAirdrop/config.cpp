@@ -3,9 +3,7 @@ class CfgPatches
 {
 	class MOVAirdropScripts
 	{
-		units[]={
-			"AirDropContainer"
-		};
+		units[]={};
 		weapons[]={};
 		requiredVersion=0.1;
 		requiredAddons[]={
@@ -32,24 +30,14 @@ class CfgMods
 	    extra = 0;
 	    type = "mod";
 
-	    dependencies[] = {"Mission", "Game", "World"};
+	    dependencies[] = {"Mission"};
 
 	    class defs
 	    {
-			class gameScriptModule
-            {
-                value = "";
-                files[] = {"airdrop/3_Game"};
-            };
-			class worldScriptModule
-            {
-                value = "";
-                files[] = {"airdrop/4_World"};
-            };
 			class missionScriptModule
             {
                 value = "";
-                files[] = {"airdrop/5_Mission"};
+                files[] = {"airdrop/scripts/5_Mission"};
             };
 			
         };
@@ -60,7 +48,7 @@ class CfgVehicles
 	class HouseNoDestruct;
 	class AirDropContainer: HouseNoDestruct
 	{
-		scope=2;
+		scope=1;
 		model="\airdrop\container.p3d";
 		/*
 		displayName="AirDrop";
@@ -82,7 +70,7 @@ class CfgSounds
 	{
 		sound[]=
 		{
-			"\airdrop\airplane",
+			"\airdrop\sounds\airplane",
 			1,
 			1,
 			2000
@@ -92,7 +80,7 @@ class CfgSounds
 	{
 		sound[]=
 		{
-			"\airdrop\alarm",
+			"\airdrop\sounds\alarm",
 			1,
 			1,
 			1000
