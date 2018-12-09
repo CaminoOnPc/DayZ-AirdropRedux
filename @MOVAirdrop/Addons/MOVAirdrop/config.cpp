@@ -3,7 +3,9 @@ class CfgPatches
 {
 	class MOVAirdropScripts
 	{
-		units[]={};
+		units[]={
+			"AirDropContainer"
+		};
 		weapons[]={};
 		requiredVersion=0.1;
 		requiredAddons[]={
@@ -45,10 +47,17 @@ class CfgMods
 class CfgVehicles 
 {
 	class HouseNoDestruct;
-	class AirDropContainer_House: HouseNoDestruct
+	class AirDropContainer: HouseNoDestruct
 	{
-		scope=1;
+		scope=2;
 		model="\airdrop\container.p3d";
+		/*
+		displayName="AirDrop";
+		descriptionShort="AirDrop container was recently dropped by a plane, may contain loot in it";	
+		itemsCargoSize[]={10,60};
+		openable=0;
+		allowOwnedCargoManipulation=1;
+		*/
 	};
 };
 class CfgSounds
