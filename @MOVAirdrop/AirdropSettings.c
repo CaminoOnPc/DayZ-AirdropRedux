@@ -1,5 +1,52 @@
 class AirDrop_Settings
-{
+{	
+	bool m_Signal = true; // Show airdrop signal when landed
+	int m_Color = 0; // Color of airdrop signal when landed (0 - Green, 1 - Orange, 2 - Purple, 3 - Red, 4 - White)
+	
+	int m_SpawnCount = 14; // In how many points airdrop will fall, count it from list above
+	
+	float m_Interval = 60.0; // Time in minutes from server start to first airdrop spawn
+    float m_Initial = 60.0; // Time in mutires how ofter airdrop will spawn
+	
+	int m_Items = 7; // Items count in airdrop
+	int m_Infected = 15; // Infected count around airdrop
+	
+	float m_FallSpeed = 0.2; // Airdrop fall speed in meters per second
+	float m_Speed = 1.0; // Airplane speed in meters per second
+	float m_Height = 300; // Airplane fly height above surface
+	
+	string GetRandomLoot()  // Items which will spawn in airdrop
+	{
+		TStringArray loot = {
+		"LandMineTrap", 
+		"TTSKOPants", 
+		"TacticalBaconCan", 
+		"M4A1", 
+		"PlateCarrierComplete", 
+		"BakedBeansCan", 
+		"WaterBottle", 
+		};
+
+		return loot.GetRandomElement();
+	}
+	
+	ref AirDrop_Places m_AirDropPlaces[] = { // Places where airdrop will fall, x, y axis and name of location
+        new AirDrop_Places(4807, 9812, "northwest airfield"), 
+		AirDrop_Places(11464, 8908, "berezino"),
+		AirDrop_Places(12159, 12583, "krasnostav"),
+		AirDrop_Places(5043, 2505, "balota"),
+		AirDrop_Places(2351, 5393, "zelenogorks"),
+		AirDrop_Places(2036, 7491, "myshkino"),
+		AirDrop_Places(11125, 14040, "novodmitrovsk"),
+		AirDrop_Places(6128, 2497, "chernogorks"),
+		AirDrop_Places(9371, 2229, "elektrozavodsk"),
+		AirDrop_Places(10479, 2664, "elektrozavodsk"),
+		AirDrop_Places(13452, 3112, "skalisty island"),
+		AirDrop_Places(2700, 6193, "sosnovka"),
+		AirDrop_Places(7436, 7720, "novy sobor"),
+		AirDrop_Places(5823, 7764, "stary sobor"),
+    };	
+	
 	TStringArray WorkingZombieClasses() // List of zombie types that will spawn around airdrop
 	{
 		return {
@@ -49,49 +96,4 @@ class AirDrop_Settings
 		"ZmbF_Clerk_Normal_Base","ZmbF_Clerk_Normal_Blue","ZmbF_Clerk_Normal_White","ZmbF_Clerk_Normal_Green","ZmbF_Clerk_Normal_Red",
 		};
 	}
-	
-	string GetRandomLoot()  // Items which will spawn in airdrop
-	{
-		TStringArray loot = {
-		"LandMineTrap", 
-		"TTSKOPants", 
-		"TacticalBaconCan", 
-		"M4A1", 
-		"PlateCarrierComplete", 
-		"BakedBeansCan", 
-		"WaterBottle", 
-		};
-
-		return loot.GetRandomElement();
-	}
-	
-	ref AirDrop_Places m_AirDropPlaces[] = { // Places where airdrop will fall, x, y axis and name of location
-        new AirDrop_Places(4807, 9812, "northwest airfield"), 
-		AirDrop_Places(11464, 8908, "berezino"),
-		AirDrop_Places(12159, 12583, "krasnostav"),
-		AirDrop_Places(5043, 2505, "balota"),
-		AirDrop_Places(2351, 5393, "zelenogorks"),
-		AirDrop_Places(2036, 7491, "myshkino"),
-		AirDrop_Places(11125, 14040, "novodmitrovsk"),
-		AirDrop_Places(6128, 2497, "chernogorks"),
-		AirDrop_Places(9371, 2229, "elektrozavodsk"),
-		AirDrop_Places(10479, 2664, "elektrozavodsk"),
-		AirDrop_Places(13452, 3112, "skalisty island"),
-		AirDrop_Places(2700, 6193, "sosnovka"),
-		AirDrop_Places(7436, 7720, "novy sobor"),
-		AirDrop_Places(5823, 7764, "stary sobor"),
-    };	
-	
-	int m_SpawnCount = 14; // In how many points airdrop will fall, count it from list above
-	
-	float m_Interval = 3.0; // Time in minutes from server start to first airdrop spawn
-    float m_Initial = 0.01; // Time in mutires how ofter airdrop will spawn
-	
-	int m_Items = 7; // Items count in airdrop
-	int m_Infected = 15; // Infected count around airdrop
-	
-	float m_FallSpeed = 0.2; // Airdrop fall speed in meters per second
-	float m_Speed = 1.0; // Airplane speed in meters per second
-	float m_Height = 300; // Airplane fly height above surface
-	
 }

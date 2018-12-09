@@ -32,15 +32,26 @@ class CfgMods
 	    extra = 0;
 	    type = "mod";
 
-	    dependencies[] = {"Mission"};
+	    dependencies[] = {"Mission", "Game", "World"};
 
 	    class defs
 	    {
+			class gameScriptModule
+            {
+                value = "";
+                files[] = {"airdrop/3_Game"};
+            };
+			class worldScriptModule
+            {
+                value = "";
+                files[] = {"airdrop/4_World"};
+            };
 			class missionScriptModule
             {
                 value = "";
                 files[] = {"airdrop/5_Mission"};
             };
+			
         };
     };
 };

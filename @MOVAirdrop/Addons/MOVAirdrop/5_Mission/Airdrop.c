@@ -176,7 +176,9 @@ class AirDrop_Base
 		m_DropParticle.GetCompEM().SwitchOff(); 
 		*/
 		
-		m_Particle = EntityAI.Cast(GetGame().CreateObject( "RDG2SmokeGrenade_Black", m_Drop.GetPosition())); 
+		AirdropSignal.m_Color = m_Settings.m_Color
+		
+		m_Particle = EntityAI.Cast(GetGame().CreateObject( "AirdropSignal", m_Drop.GetPosition())); 
         m_Particle.SetOrientation("0 0 0");
         m_Particle.GetCompEM().SwitchOn(); 
         m_Particle.Delete();
