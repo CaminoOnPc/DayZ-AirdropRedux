@@ -34,6 +34,7 @@ File **AirdropPlaces.c** contains following parameters:
 
 * [mov3ax](https://github.com/mov3ax)
 * [philippj](https://github.com/philippj)
+* Mr9099
 
 
 
