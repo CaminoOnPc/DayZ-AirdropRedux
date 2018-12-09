@@ -205,11 +205,8 @@ class AirDrop_Base
 	
 	void DropSimulation() 
 	{
-		GetNotificationManager().ShowAlert("Velocity is " + m_Drop.GetSpeed() + " and " + GetVelocity(m_Drop));
-		
 		if (GetVelocity(m_Drop) == vector.Zero)
 		{
-			/*
 			GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).Remove(DropSimulation);
 			vector m_TempPos = m_Drop.GetPosition();
 			vector m_TempOri = m_Drop.GetOrientation();
@@ -218,7 +215,6 @@ class AirDrop_Base
 			m_Drop.SetOrientation(m_TempOri);
             Print("<AirDrop> Container did hit the surface");
             AfterDrop();
-			*/
 		}
     }
 	
