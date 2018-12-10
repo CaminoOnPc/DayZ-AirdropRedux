@@ -94,11 +94,6 @@ class AirDrop_Settings
 		};
 	}
 	
-	void AirDrop_Settings()
-	{
-		Load();
-	}
-	
 	static ref AirDrop_Settings Load()
     {
 		ref AirDrop_Settings settings = new AirDrop_Settings();
@@ -181,7 +176,7 @@ class AirDrop_Base
 		
 	void AirDrop_Base() 
 	{	
-		m_Settings = new AirDrop_Settings();
+		m_Settings = AirDrop_Settings.Load();
 		
 		if (GetGame().IsServer() || !GetGame().IsMultiplayer())
 		{
