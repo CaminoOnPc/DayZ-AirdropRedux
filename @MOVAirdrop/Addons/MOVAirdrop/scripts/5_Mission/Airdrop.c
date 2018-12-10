@@ -1,22 +1,49 @@
-#include "$CurrentDir:@MOVAirdrop\\Settings\\AirdropSettings.c"
-#include "$CurrentDir:@MOVAirdrop\\Settings\\AirdropPlaces.c"
-
-class AirDrop_Places
+protected static const string JSON_PATH = "$CurrentDir:@MOVAirdrop\\Settings\\AirDrop_Settings.json";
+	
+class AirDrop_Settings
 {
-    float x, y;
-    string name;
-    bool disclose, send_proximity;
+	// Items which will spawn in airdrop
+		autoptr TStringArray m_Loot = {
+		"LandMineTrap", 
+		"TTSKOPants", 
+		"TacticalBaconCan", 
+		"M4A1", 
+		"PlateCarrierComplete", 
+		"BakedBeansCan", 
+		"WaterBottle", 
+	};
 
-    void AirDrop_Places(float x, float y, string name) 
-	{
-        this.x = x;
-        this.y = y;
-        this.name = name;
-    }
-}
+	float m_Interval = 60.0; // Time in minutes from server start to first airdrop spawn
+	float m_Initial = 60.0; // Time in mutires how ofter airdrop will spawn
+	
+	int m_Items = 7; // Items count in airdrop
+	int m_Infected = 15; // Infected count around airdrop
+	
+	float m_Speed = 1.0; // Airplane speed in meters per second
+	float m_Height = 300; // Airplane fly height above surface
+	
+	float m_Mass = 100; // Airdrop container mass
+	
+	int m_SpawnCount = 14; // In how many points airdrop will fall, count it from list above
 
-class AirDrop_Base
-{
+	// Places where airdrop will fall, x, y axis and name of location
+	ref AirDrop_Places m_AirDropPlaces[] = {
+    	new AirDrop_Places(4807, 9812, "northwest airfield"), 
+		AirDrop_Places(11464, 8908, "berezino"),
+		AirDrop_Places(12159, 12583, "krasnostav"),
+		AirDrop_Places(5043, 2505, "balota"),
+		AirDrop_Places(2351, 5393, "zelenogorks"),
+		AirDrop_Places(2036, 7491, "myshkino"),
+		AirDrop_Places(11125, 14040, "novodmitrovsk"),
+		AirDrop_Places(6128, 2497, "chernogorks"),
+		AirDrop_Places(9371, 2229, "elektrozavodsk"),
+		AirDrop_Places(10479, 2664, "elektrozavodsk"),
+		AirDrop_Places(13452, 3112, "skalisty island"),
+		AirDrop_Places(2700, 6193, "sosnovka"),
+		AirDrop_Places(7436, 7720, "novy sobor"),
+		AirDrop_Places(5823, 7764, "stary sobor"),
+	};	
+		
 	TStringArray WorkingZombieClasses() // List of zombie types that will spawn around airdrop
 	{
 		return {
@@ -67,9 +94,50 @@ class AirDrop_Base
 		};
 	}
 	
+	void AirDrop_Settings()
+	{
+		Load();
+	}
+	
+	static ref AirDrop_Settings Load()
+    {
+		ref AirDrop_Settings settings = new AirDrop_Settings();
+		
+		if (FileExist(JSON_PATH)
+		{
+			JsonFileLoader<AirDrop_Settings>.JsonLoadFile( JSON_PATH, settings );
+			Print("<AirDrop> Config was loaded");
+		}
+		else
+		{
+			Print("<AirDrop> Config was not loaded");
+		}
+		
+		return settings;
+	}
+}
+
+class AirDrop_Places
+{
+    float x, y;
+    string name;
+    bool disclose, send_proximity;
+
+    void AirDrop_Places(float x, float y, string name) 
+	{
+        this.x = x;
+        this.y = y;
+        this.name = name;
+    }
+}
+
+class AirDrop_Base
+{
+	ref AirDrop_Settings m_Settings;
+		
 	string GetRandomLoot() 
 	{
-		return m_Loot.GetRandomElement();
+		return m_Settings.m_Loot.GetRandomElement();
 	}
 	
 	void SendMessage(string message) 
@@ -98,7 +166,6 @@ class AirDrop_Base
 		m_Enabled = false;
 		
 		Print("<AirDrop> Airplane vanished");
-		
 		SendMessage("The airplane has been vanished");
 	}
 	
@@ -114,11 +181,12 @@ class AirDrop_Base
 		
 	void AirDrop_Base() 
 	{	
+		m_Settings = new AirDrop_Settings();
+		
 		if (GetGame().IsServer() || !GetGame().IsMultiplayer())
 		{
 			ResetPlane();
-		
-			GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(InitPlane, m_Initial * 60 * 1000, false);
+			GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(InitPlane, m_Settings.m_Initial * 60 * 1000, false);
 			Print("<AirDrop> Initializing");
 		}
 	}
@@ -130,7 +198,7 @@ class AirDrop_Base
 		
         SpawnPlane();
 		
-        GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(InitPlane, m_Interval * 60 * 1000, false);
+        GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(InitPlane, m_Settings.m_Interval * 60 * 1000, false);
     }
 		
 	ref AirDrop_Places m_ActiveAirDropPlaces;
@@ -175,14 +243,14 @@ class AirDrop_Base
 		
 		AirDrop_Places m_DefaultAirDropPlaces = new AirDrop_Places(2760.0, 5527.0, "Default");	
 		
-		if(m_SpawnCount < 1) 
+		if(m_Settings.m_SpawnCount < 1) 
 		{
 			Print("<AirDrop> Spawning places count is lower than one");
 			m_ActiveAirDropPlaces = m_DefaultAirDropPlaces;
 		}
 		else
 		{
-			m_ActiveAirDropPlaces = m_AirDropPlaces[Math.RandomInt(0, m_SpawnCount - 1)];
+			m_ActiveAirDropPlaces =  m_Settings.m_AirDropPlaces[Math.RandomInt(0, m_Settings.m_SpawnCount - 1)];
 		}
 		
 		vector m_Temp;
@@ -220,7 +288,7 @@ class AirDrop_Base
         m_Particle.GetCompEM().SwitchOn(); 
         m_Particle.Delete();
 
-        for(int i = 0; i < m_Items; i++) 
+        for(int i = 0; i < m_Settings.m_Items; i++) 
 		{
             float a = Math.RandomFloat(0.4, 1.0) * 2 * Math.PI;
             float r = 5.0 * Math.Sqrt(Math.RandomFloat(0.4, 1.0));
@@ -231,12 +299,12 @@ class AirDrop_Base
             string m_Item = GetRandomLoot();
             GetGame().CreateObject(m_Item, m_DynamicPos, false, true);
         }
-        for ( int m_Zombie = 0; m_Zombie < m_Infected; m_Zombie++ ) 
+        for ( int m_Zombie = 0; m_Zombie < m_Settings.m_Infected; m_Zombie++ ) 
 		{
             m_DynamicPos = m_Base;
             m_DynamicPos[0] = m_DynamicPos[0] + Math.RandomFloat(-20.0, 20.0);
             m_DynamicPos[2] = m_DynamicPos[2] + Math.RandomFloat(-20.0, 20.0);
-            GetGame().CreateObject( WorkingZombieClasses().GetRandomElement(), m_DynamicPos, false, true );
+            GetGame().CreateObject( m_Settings.WorkingZombieClasses().GetRandomElement(), m_DynamicPos, false, true );
         }
     }
 	
@@ -265,8 +333,8 @@ class AirDrop_Base
 		if ( m_Drop == NULL ) return;
 		dBodyDestroy( m_Drop );	
 		autoptr PhysicsGeomDef geoms[] = {PhysicsGeomDef("", dGeomCreateBox("3 2.5 3"), "material/default", 0xffffffff)};
-		dBodyCreateDynamicEx( m_Drop , "0 0 0", m_Mass, geoms );
-		SetVelocity(m_Drop, "1 -50 0");	
+		dBodyCreateDynamicEx( m_Drop , "0 0 0", m_Settings.m_Mass, geoms );
+		SetVelocity(m_Drop, "1 -10 0");	
 		
         GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(DropSimulation, 10, true);
     }
@@ -284,9 +352,9 @@ class AirDrop_Base
 		m_PlanePos[0] = Math.Cos(m_Angle);
         m_PlanePos[2] = Math.Sin(m_Angle);
 		
-		vector m_PlanePosFixed = m_Plane.GetPosition() + (m_PlanePos * m_Speed);
+		vector m_PlanePosFixed = m_Plane.GetPosition() + (m_PlanePos * m_Settings.m_Speed);
 		
-		m_PlanePosFixed[1] = GetGame().SurfaceY(m_PlanePosFixed[0], m_PlanePosFixed[2]) + m_Height;
+		m_PlanePosFixed[1] = GetGame().SurfaceY(m_PlanePosFixed[0], m_PlanePosFixed[2]) + m_Settings.m_Height;
 		
 		m_Plane.SetPosition(m_PlanePosFixed);
 		
