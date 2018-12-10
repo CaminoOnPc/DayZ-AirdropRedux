@@ -1,5 +1,6 @@
 protected static const string JSON_PATH = "$CurrentDir:@MOVAirdrop\\Settings\\AirDrop_Settings.json";
-	
+protected static const string JSON_PATH_ALT = "$CurrentDir:@[MOV] Airdrop Redux\\Settings\\AirDrop_Settings.json";
+		
 class AirDrop_Settings
 {
 	// Items which will spawn in airdrop
@@ -26,6 +27,47 @@ class AirDrop_Settings
 	
 	int m_SpawnCount = 14; // In how many points airdrop will fall, count it from list above
 
+	static ref AirDrop_Settings Load()
+    {
+		ref AirDrop_Settings settings = new AirDrop_Settings();
+		
+		if (FileExist(JSON_PATH)
+		{
+			JsonFileLoader<AirDrop_Settings>.JsonLoadFile( JSON_PATH, settings );
+			Print("<AirDrop> Config was loaded");
+		}
+		else if (FileExist(JSON_PATH_ALT)
+		{
+			JsonFileLoader<AirDrop_Settings>.JsonLoadFile( JSON_PATH_ALT, settings );
+			Print("<AirDrop> Config was loaded");
+		}
+		else
+		{
+			Print("<AirDrop> Config was not loaded");
+		}
+		
+		return settings;
+	}
+}
+
+class AirDrop_Places
+{
+    float x, y;
+    string name;
+    bool disclose, send_proximity;
+
+    void AirDrop_Places(float x, float y, string name) 
+	{
+        this.x = x;
+        this.y = y;
+        this.name = name;
+    }
+}
+
+class AirDrop_Base
+{
+	ref AirDrop_Settings m_Settings;
+		
 	// Places where airdrop will fall, x, y axis and name of location
 	ref AirDrop_Places m_AirDropPlaces[] = {
     	new AirDrop_Places(4807, 9812, "northwest airfield"), 
@@ -43,7 +85,7 @@ class AirDrop_Settings
 		AirDrop_Places(7436, 7720, "novy sobor"),
 		AirDrop_Places(5823, 7764, "stary sobor"),
 	};	
-		
+	
 	TStringArray WorkingZombieClasses() // List of zombie types that will spawn around airdrop
 	{
 		return {
@@ -93,43 +135,7 @@ class AirDrop_Settings
 		"ZmbF_Clerk_Normal_Base","ZmbF_Clerk_Normal_Blue","ZmbF_Clerk_Normal_White","ZmbF_Clerk_Normal_Green","ZmbF_Clerk_Normal_Red",
 		};
 	}
-	
-	static ref AirDrop_Settings Load()
-    {
-		ref AirDrop_Settings settings = new AirDrop_Settings();
-		
-		if (FileExist(JSON_PATH)
-		{
-			JsonFileLoader<AirDrop_Settings>.JsonLoadFile( JSON_PATH, settings );
-			Print("<AirDrop> Config was loaded");
-		}
-		else
-		{
-			Print("<AirDrop> Config was not loaded");
-		}
-		
-		return settings;
-	}
-}
 
-class AirDrop_Places
-{
-    float x, y;
-    string name;
-    bool disclose, send_proximity;
-
-    void AirDrop_Places(float x, float y, string name) 
-	{
-        this.x = x;
-        this.y = y;
-        this.name = name;
-    }
-}
-
-class AirDrop_Base
-{
-	ref AirDrop_Settings m_Settings;
-		
 	string GetRandomLoot() 
 	{
 		return m_Settings.m_Loot.GetRandomElement();
@@ -245,7 +251,7 @@ class AirDrop_Base
 		}
 		else
 		{
-			m_ActiveAirDropPlaces =  m_Settings.m_AirDropPlaces[Math.RandomInt(0, m_Settings.m_SpawnCount - 1)];
+			m_ActiveAirDropPlaces =  m_AirDropPlaces[Math.RandomInt(0, m_Settings.m_SpawnCount - 1)];
 		}
 		
 		vector m_Temp;
@@ -299,7 +305,7 @@ class AirDrop_Base
             m_DynamicPos = m_Base;
             m_DynamicPos[0] = m_DynamicPos[0] + Math.RandomFloat(-20.0, 20.0);
             m_DynamicPos[2] = m_DynamicPos[2] + Math.RandomFloat(-20.0, 20.0);
-            GetGame().CreateObject( m_Settings.WorkingZombieClasses().GetRandomElement(), m_DynamicPos, false, true );
+            GetGame().CreateObject( WorkingZombieClasses().GetRandomElement(), m_DynamicPos, false, true );
         }
     }
 	
