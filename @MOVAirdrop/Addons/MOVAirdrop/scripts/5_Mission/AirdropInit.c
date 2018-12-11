@@ -6,3 +6,12 @@ modded class MissionServer
         GetAirdropBase();
     }
 }
+
+modded class MissionGameplay
+{
+    void MissionGameplay()
+    {
+		g_AirdropBase = null;
+        GetAirdropBase();
+    }
+}

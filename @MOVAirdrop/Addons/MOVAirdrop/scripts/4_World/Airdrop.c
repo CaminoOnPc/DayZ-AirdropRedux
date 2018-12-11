@@ -23,7 +23,7 @@ class AirDrop_Settings
 	float m_Speed = 1.0; // Airplane speed in meters per second
 	float m_Height = 300; // Airplane fly height above surface
 	
-	float m_Mass = 100; // Airdrop container mass
+	float m_Mass = 10; // Airdrop container mass
 	
 	int m_SpawnCount = 14; // In how many points airdrop will fall, count it from list above
 
@@ -146,7 +146,7 @@ class AirDrop_Base
 		GetNotificationManager().ShowAlert(message, 5000);
 	}
 	
-	Object m_Plane;
+	House m_Plane;
 	vector m_PlanePos;
 	
 	bool m_Enabled = false;
@@ -156,7 +156,7 @@ class AirDrop_Base
 	{
 		GetGame().ObjectDelete(m_Plane);
 		
-		m_Plane = GetGame().CreateObject( "Land_Wreck_C130J", "0 0 0", false, true, true );
+		m_Plane = GetGame().CreateObject( "AirDropPlane", "0 0 0", false, true, true );
 		
 		m_PlanePos[0] = 0;
         m_PlanePos[1] = 0;
@@ -183,7 +183,7 @@ class AirDrop_Base
 	void AirDrop_Base() 
 	{	
 		m_Settings = AirDrop_Settings.Load();
-		
+
 		if (GetGame().IsServer() || !GetGame().IsMultiplayer())
 		{
 			ResetPlane();
@@ -239,9 +239,7 @@ class AirDrop_Base
         m_PlaneStartPos[0] = m_PlaneSpawn[0];
         m_PlaneStartPos[2] = m_PlaneSpawn[1];
         m_Plane.SetPosition(m_PlaneStartPos);
-		
-		m_Sound = m_Plane.PlaySoundLoop("AirPlaneLoop", 2000, true);
-		
+
 		AirDrop_Places m_DefaultAirDropPlaces = new AirDrop_Places(2760.0, 5527.0, "Default");	
 		
 		if(m_Settings.m_SpawnCount < 1) 
@@ -273,22 +271,18 @@ class AirDrop_Base
 		vector m_Direction = Vector(m_PlaneSpawn[0], 0, m_PlaneSpawn[1]) - Vector(m_DropPos[0], 0, m_DropPos[1]);
         m_Plane.SetOrientation(Vector(m_Direction.VectorToAngles()[0], 0, 0));
 		
+		// GetAirdropSound().PlayLoop(m_Plane);
+
 		GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(MovePlane, 20, true);
 	}
 	
 	EntityAI m_Physical;
-	EntityAI m_Particle;
-	EntityAI m_DropParticle;
-
+	House m_Particle;
+	
 	void AfterDrop() 
 	{
         vector m_Base = m_Drop.GetPosition(), m_DynamicPos;
 	
-		m_Particle = EntityAI.Cast(GetGame().CreateObject( "RDG2SmokeGrenade_Black", m_Drop.GetPosition(), false, true)); 
-        m_Particle.SetOrientation("0 0 0");
-        m_Particle.GetCompEM().SwitchOn(); 
-        m_Particle.Delete();
-
         for(int i = 0; i < m_Settings.m_Items; i++) 
 		{
             float a = Math.RandomFloat(0.4, 1.0) * 2 * Math.PI;
@@ -307,6 +301,11 @@ class AirDrop_Base
             m_DynamicPos[2] = m_DynamicPos[2] + Math.RandomFloat(-20.0, 20.0);
             GetGame().CreateObject( WorkingZombieClasses().GetRandomElement(), m_DynamicPos, false, true);
         }
+		
+		m_Particle = EntityAI.Cast(GetGame().CreateObject( "RDG2SmokeGrenade_Black", m_Drop.GetPosition(), false, true)); 
+        m_Particle.SetOrientation("0 0 0");
+        m_Particle.GetCompEM().SwitchOn(); 
+        m_Particle.Delete();
     }
 	
 	int m_Motion = 0;
@@ -328,22 +327,21 @@ class AirDrop_Base
 	
 	void Drop() 
 	{
-		m_Plane.PlaySound("AirPlaneAlarm", 1000, true);
-        m_Drop = GetGame().CreateObject( "AirDropContainer", m_Plane.GetPosition() + "0 10 0" );	
+		//GetAirdropSound().PlaySignal(m_Plane);
+		
+        m_Drop = GetGame().CreateObject( "AirDropContainer", m_Plane.GetPosition() + "0 -10 0" );	
 		
 		if ( m_Drop == NULL ) return;
 		dBodyDestroy( m_Drop );	
-		autoptr PhysicsGeomDef geoms[] = {PhysicsGeomDef("", dGeomCreateBox("3 2.5 3"), "material/default", 0xffffffff)};
-		dBodyCreateDynamicEx( m_Drop , "0 0 0", m_Settings.m_Mass, geoms );
-		SetVelocity(m_Drop, "1 -10 0");	
+		autoptr PhysicsGeomDef geoms[] = {PhysicsGeomDef("", dGeomCreateBox("3.8 2.75 3.8"), "material/default", 0xffffffff)};
+		dBodyCreateDynamicEx( m_Drop, "0 0 0", m_Settings.m_Mass, geoms );
+		SetVelocity(m_Drop, "0 -1 0");	
 		
         GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(DropSimulation, 10, true);
     }
 	
 	float m_ProximityDist = 1500.0;
 	bool m_ProximityWarning = false;
-	
-	SoundOnVehicle m_Sound;
 	
 	void MovePlane() 
 	{
@@ -357,7 +355,7 @@ class AirDrop_Base
 		
 		m_PlanePosFixed[1] = GetGame().SurfaceY(m_PlanePosFixed[0], m_PlanePosFixed[2]) + m_Settings.m_Height;
 		
-		m_Plane.SetPosition(m_PlanePosFixed);
+		m_Plane.SetPosition(m_PlanePosFixed);	
 		
 		if(!m_Landed) 
 		{
@@ -371,7 +369,7 @@ class AirDrop_Base
 			else if(m_Dist <= m_ProximityDist && !m_ProximityWarning) 
 			{
 				m_ProximityWarning = true;
-				m_Plane.PlaySound("AirPlaneAlarm", 1000, true);
+				//GetAirdropSound().PlaySignal(m_Plane);
 				SendMessage("The plane is closing in on " + m_ActiveAirDropPlaces.name);
 			}
 		}

@@ -7,6 +7,7 @@ class CfgPatches
 		weapons[]={};
 		requiredVersion=0.1;
 		requiredAddons[]={
+			"RPC_Scripts",
 			"MOVNotificationScripts",
 			"DZ_Data",
 			"DZ_Structures_Residential"	
@@ -30,22 +31,31 @@ class CfgMods
 	    extra = 0;
 	    type = "mod";
 
-	    dependencies[] = {"Mission"};
+	    dependencies[] = {"Mission", "World"};
 
 	    class defs
 	    {
+			class worldScriptModule
+            {
+                value = "";
+                files[] = {"airdrop/scripts/4_World"};
+            };
 			class missionScriptModule
             {
                 value = "";
                 files[] = {"airdrop/scripts/5_Mission"};
             };
-			
         };
     };
 };
 class CfgVehicles 
 {
 	class HouseNoDestruct;
+	class AirDropPlane: HouseNoDestruct
+	{
+		scope=1;
+		model="\DZ\structures\wrecks\Aircraft\Wreck_C130J.p3d";
+	};
 	class AirDropContainer: HouseNoDestruct
 	{
 		scope=1;
