@@ -186,9 +186,14 @@ class AirDrop_Base
 
 		if (GetGame().IsServer() || !GetGame().IsMultiplayer())
 		{
-			ResetPlane();
-			GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(InitPlane, m_Settings.m_Initial * 60 * 1000, false);
 			Print("<AirDrop> Initializing");
+			ResetPlane();
+			
+			GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(InitPlane, m_Settings.m_Initial * 60 * 1000, false);	
+		}
+		if (GetGame().IsClient())
+		{
+			
 		}
 	}
 	
@@ -196,7 +201,6 @@ class AirDrop_Base
 	{
         ResetPlane();
         ResetDrop();
-		
         SpawnPlane();
 		
         GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(InitPlane, m_Settings.m_Interval * 60 * 1000, false);
@@ -206,6 +210,8 @@ class AirDrop_Base
 	
 	vector m_PlaneSpawn;
 	vector m_DropPos;
+	
+	EffectSound m_Sound;
 	
 	void SpawnPlane() 
 	{
@@ -239,6 +245,8 @@ class AirDrop_Base
         m_PlaneStartPos[0] = m_PlaneSpawn[0];
         m_PlaneStartPos[2] = m_PlaneSpawn[1];
         m_Plane.SetPosition(m_PlaneStartPos);
+				
+		GetAirdropSound().PlayLoop();
 
 		AirDrop_Places m_DefaultAirDropPlaces = new AirDrop_Places(2760.0, 5527.0, "Default");	
 		
@@ -271,12 +279,9 @@ class AirDrop_Base
 		vector m_Direction = Vector(m_PlaneSpawn[0], 0, m_PlaneSpawn[1]) - Vector(m_DropPos[0], 0, m_DropPos[1]);
         m_Plane.SetOrientation(Vector(m_Direction.VectorToAngles()[0], 0, 0));
 		
-		// GetAirdropSound().PlayLoop(m_Plane);
-
 		GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(MovePlane, 20, true);
 	}
 	
-	EntityAI m_Physical;
 	House m_Particle;
 	
 	void AfterDrop() 
@@ -327,7 +332,7 @@ class AirDrop_Base
 	
 	void Drop() 
 	{
-		//GetAirdropSound().PlaySignal(m_Plane);
+		GetAirdropSound().PlaySignal();
 		
         m_Drop = GetGame().CreateObject( "AirDropContainer", m_Plane.GetPosition() + "0 -10 0" );	
 		
@@ -356,7 +361,7 @@ class AirDrop_Base
 		m_PlanePosFixed[1] = GetGame().SurfaceY(m_PlanePosFixed[0], m_PlanePosFixed[2]) + m_Settings.m_Height;
 		
 		m_Plane.SetPosition(m_PlanePosFixed);	
-		
+
 		if(!m_Landed) 
 		{
 			float m_Dist = Math.Sqrt(Math.Pow(m_DropPos[0] - m_PlanePosFixed[0], 2) + Math.Pow(m_DropPos[1] - m_PlanePosFixed[2], 2));
@@ -369,7 +374,7 @@ class AirDrop_Base
 			else if(m_Dist <= m_ProximityDist && !m_ProximityWarning) 
 			{
 				m_ProximityWarning = true;
-				//GetAirdropSound().PlaySignal(m_Plane);
+				GetAirdropSound().PlaySignal();
 				SendMessage("The plane is closing in on " + m_ActiveAirDropPlaces.name);
 			}
 		}

@@ -69,31 +69,51 @@ class CfgVehicles
 		*/
 	};
 };
-class CfgSounds
+class CfgSoundShaders
 {
-	class default
+	class BaseEngineAirPlane_SoundShader
 	{
-		name="";
-		titles[]={};
+		rangeCurve = "defaultAmpAttenuationCurve";
+		range = 2000;
 	};
-	class AirPlaneLoop: default
+	class BaseAlarmAirPlane_SoundShader
 	{
-		sound[]=
-		{
-			"\airdrop\sounds\airplane",
-			1,
-			1,
-			2000
-		};
+		rangeCurve = "defaultAmpAttenuationCurve";
+		range = 1000;
 	};
-	class AirPlaneAlarm: default
+	class AirPlaneLoop_SoundShader: BaseEngineAirPlane_SoundShader
 	{
-		sound[]=
-		{
-			"\airdrop\sounds\alarm",
-			1,
-			1,
-			1000
-		};
+		samples[] = {{"\airdrop\sounds\airplane",1}};
+		volume = 1;
+	};
+	class AirPlaneAlarm_SoundShader: BaseAlarmAirPlane_SoundShader
+	{
+		samples[] = {{"\airdrop\sounds\alarm",1}};
+		volume = 1;
+	};
+};
+class CfgSoundSets
+{
+	class AirPlaneLoopBase_SoundSet
+	{
+		sound3DProcessingType = "VehicleExt_3DProcessingType";
+		spatial = 1;
+		doppler = 0;
+		loop = 1;
+	};
+	class AirPlaneAlarmBase_SoundSet
+	{
+		sound3DProcessingType = "VehicleExt_3DProcessingType";
+		spatial = 1;
+		doppler = 0;
+		loop = 0;
+	};
+	class AirPlaneLoop_SoundSet: AirPlaneLoopBase_SoundSet
+	{
+		soundShaders[] = {"AirPlaneLoop_SoundShader"};
+	};
+	class AirPlaneAlarm_SoundSet: AirPlaneAlarmBase_SoundSet
+	{
+		soundShaders[] = {"AirPlaneAlarm_SoundShader"};
 	};
 };
