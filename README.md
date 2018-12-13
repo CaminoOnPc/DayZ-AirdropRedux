@@ -12,9 +12,7 @@ First of all you have to download [Notification Framework](https://github.com/mo
 
 ### Configuration
 
-Open the **@MOVAirdrop** folder and there you would see **Settings** folder. In that **Settings** folder you can adjust following variables from two different files.
-
-File **AirdropSettings.c** contains following parameters:
+Open the **@MOVAirdrop** folder and there you would see **Settings** folder. In that **Settings** folder you can adjust following variables from **AirDrop_Settings.json** file.
 
 * Array Loot return type of items which will spawn in AirDrop.
 * Variable Interval return how ofter AirDrop will fly.
@@ -24,11 +22,6 @@ File **AirdropSettings.c** contains following parameters:
 * Variable Mass return mass of AirDrop container.
 * Variable Speed return how fast Airplane will fly.
 * Variable Height return how high Airplane will fly above the surface.
-
-File **AirdropPlaces.c** contains following parameters:
-
-* Array AirDropPlaces return places where AirDrop can land.
-* Variable SpawnCount return amount of places where AirDrop can land.
 
 ## Contributors
 
