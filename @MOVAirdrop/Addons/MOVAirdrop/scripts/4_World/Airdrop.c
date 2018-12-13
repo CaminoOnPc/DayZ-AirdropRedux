@@ -305,10 +305,10 @@ class AirDrop_Base
             GetGame().CreateObject( WorkingZombieClasses().GetRandomElement(), m_DynamicPos, false, true);
         }
 		
-		m_Particle = EntityAI.Cast(GetGame().CreateObject( "RDG2SmokeGrenade_Black", m_Drop.GetPosition(), false, true)); 
-        m_Particle.SetOrientation("0 0 0");
-        m_Particle.GetCompEM().SwitchOn(); 
-        m_Particle.Delete();
+		// m_Particle = EntityAI.Cast(GetGame().CreateObject( "RDG2SmokeGrenade_Black", m_Drop.GetPosition(), false, true)); 
+       	// m_Particle.SetOrientation("0 0 0");
+        // m_Particle.GetCompEM().SwitchOn(); 
+        // m_Particle.Delete();
     }
 	
 	int m_Motion = 0;
@@ -332,7 +332,7 @@ class AirDrop_Base
 	{
 		GetAirdropSound().PlaySignal();
 		
-        m_Drop = GetGame().CreateObject( "AirDropContainer", m_Plane.GetPosition() + "0 -10 0" );	
+        m_Drop = GetGame().CreateObject( "AirDropContainer_Physical", m_Plane.GetPosition() + "0 -10 0" );	
 		
 		if ( m_Drop == NULL ) return;
 		dBodyDestroy( m_Drop );	
@@ -359,7 +359,6 @@ class AirDrop_Base
 		m_PlanePosFixed[1] = GetGame().SurfaceY(m_PlanePosFixed[0], m_PlanePosFixed[2]) + m_Settings.m_Height;
 		
 		m_Plane.SetPosition(m_PlanePosFixed);	
-		
 	
 		if(!m_Landed) 
 		{

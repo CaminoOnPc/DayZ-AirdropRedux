@@ -73,6 +73,11 @@ class CfgVehicles
 		allowOwnedCargoManipulation=1;
 		*/
 	};
+	class AirDropContainer_Physical: HouseNoDestruct
+	{
+		scope=1;
+		model="\airdrop\container.p3d";
+	};
 };
 class CfgSounds
 {
@@ -100,54 +105,5 @@ class CfgSounds
 			1,
 			1000
 		};
-	};
-};
-
-class CfgSoundShaders
-{
-	class BaseEngineAirPlane_SoundShader
-	{
-		rangeCurve = "defaultAmpAttenuationCurve";
-		range = 2000;
-	};
-	class BaseAlarmAirPlane_SoundShader
-	{
-		rangeCurve = "defaultAmpAttenuationCurve";
-		range = 1000;
-	};
-	class AirPlaneLoop_SoundShader: BaseEngineAirPlane_SoundShader
-	{
-		samples[] = {{"\airdrop\sounds\airplane",1}};
-		volume = 1;
-	};
-	class AirPlaneAlarm_SoundShader: BaseAlarmAirPlane_SoundShader
-	{
-		samples[] = {{"\airdrop\sounds\alarm",1}};
-		volume = 1;
-	};
-};
-class CfgSoundSets
-{
-	class AirPlaneLoopBase_SoundSet
-	{
-		sound3DProcessingType = "VehicleExt_3DProcessingType";
-		spatial = 1;
-		doppler = 0;
-		loop = 1;
-	};
-	class AirPlaneAlarmBase_SoundSet
-	{
-		sound3DProcessingType = "VehicleExt_3DProcessingType";
-		spatial = 1;
-		doppler = 0;
-		loop = 0;
-	};
-	class AirPlaneLoop_SoundSet: AirPlaneLoopBase_SoundSet
-	{
-		soundShaders[] = {"AirPlaneLoop_SoundShader"};
-	};
-	class AirPlaneAlarm_SoundSet: AirPlaneAlarmBase_SoundSet
-	{
-		soundShaders[] = {"AirPlaneAlarm_SoundShader"};
 	};
 };
