@@ -31,10 +31,15 @@ class CfgMods
 	    extra = 0;
 	    type = "mod";
 
-	    dependencies[] = {"Mission", "World"};
+	    dependencies[] = {"Mission", "World", "Game"};
 
 	    class defs
 	    {
+			class gameScriptModule
+            {
+                value = "";
+                files[] = {"airdrop/scripts/3_Game"};
+            };
 			class worldScriptModule
             {
                 value = "";
@@ -69,6 +74,35 @@ class CfgVehicles
 		*/
 	};
 };
+class CfgSounds
+{
+	class default
+	{
+		name="";
+		titles[]={};
+	};
+	class AirPlaneLoop: default
+	{
+		sound[]=
+		{
+			"\airdrop\sounds\airplane",
+			1,
+			1,
+			2000
+		};
+	};
+	class AirPlaneAlarm: default
+	{
+		sound[]=
+		{
+			"\airdrop\sounds\alarm",
+			1,
+			1,
+			1000
+		};
+	};
+};
+
 class CfgSoundShaders
 {
 	class BaseEngineAirPlane_SoundShader

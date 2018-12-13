@@ -179,7 +179,7 @@ class AirDrop_Base
 		 if (m_Particle)
 		 	m_Particle.GetCompEM().SwitchOff();
 	}
-		
+		   
 	void AirDrop_Base() 
 	{	
 		m_Settings = AirDrop_Settings.Load();
@@ -246,8 +246,6 @@ class AirDrop_Base
         m_PlaneStartPos[2] = m_PlaneSpawn[1];
         m_Plane.SetPosition(m_PlaneStartPos);
 				
-		GetAirdropSound().PlayLoop();
-
 		AirDrop_Places m_DefaultAirDropPlaces = new AirDrop_Places(2760.0, 5527.0, "Default");	
 		
 		if(m_Settings.m_SpawnCount < 1) 
@@ -361,7 +359,8 @@ class AirDrop_Base
 		m_PlanePosFixed[1] = GetGame().SurfaceY(m_PlanePosFixed[0], m_PlanePosFixed[2]) + m_Settings.m_Height;
 		
 		m_Plane.SetPosition(m_PlanePosFixed);	
-
+		
+	
 		if(!m_Landed) 
 		{
 			float m_Dist = Math.Sqrt(Math.Pow(m_DropPos[0] - m_PlanePosFixed[0], 2) + Math.Pow(m_DropPos[1] - m_PlanePosFixed[2], 2));
