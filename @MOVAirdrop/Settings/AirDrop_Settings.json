@@ -6,6 +6,5 @@
 	"m_Infected": 15,                                
 	"m_Speed": 1.0,                              
 	"m_Height": 300.0,                           
-	"m_Mass": 100.0,                               
-	"m_SpawnCount": 14                     
+	"m_Mass": 100.0                                           
 }
