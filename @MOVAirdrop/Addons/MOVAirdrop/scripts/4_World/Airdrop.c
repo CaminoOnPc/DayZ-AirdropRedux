@@ -25,8 +25,6 @@ class AirDrop_Settings
 	
 	float m_Mass = 10; // Airdrop container mass
 	
-	int m_SpawnCount = 14; // In how many points airdrop will fall, count it from list above
-
 	static ref AirDrop_Settings Load()
     {
 		ref AirDrop_Settings settings = new AirDrop_Settings();
@@ -68,6 +66,8 @@ class AirDrop_Base
 {
 	ref AirDrop_Settings m_Settings;
 		
+	int m_SpawnCount = 14; // In how many points airdrop will fall, count it from list above
+
 	// Places where airdrop will fall, x, y axis and name of location
 	ref AirDrop_Places m_AirDropPlaces[] = {
     	new AirDrop_Places(4807, 9812, "northwest airfield"), 
@@ -191,10 +191,6 @@ class AirDrop_Base
 			
 			GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(InitPlane, m_Settings.m_Initial * 60 * 1000, false);	
 		}
-		if (GetGame().IsClient())
-		{
-			
-		}
 	}
 	
 	void InitPlane() 
@@ -248,14 +244,14 @@ class AirDrop_Base
 				
 		AirDrop_Places m_DefaultAirDropPlaces = new AirDrop_Places(2760.0, 5527.0, "Default");	
 		
-		if(m_Settings.m_SpawnCount < 1) 
+		if(m_SpawnCount < 1) 
 		{
 			Print("<AirDrop> Spawning places count is lower than one");
 			m_ActiveAirDropPlaces = m_DefaultAirDropPlaces;
 		}
 		else
 		{
-			m_ActiveAirDropPlaces =  m_AirDropPlaces[Math.RandomInt(0, m_Settings.m_SpawnCount - 1)];
+			m_ActiveAirDropPlaces =  m_AirDropPlaces[Math.RandomInt(0, m_SpawnCount - 1)];
 		}
 		
 		vector m_Temp;
@@ -304,11 +300,6 @@ class AirDrop_Base
             m_DynamicPos[2] = m_DynamicPos[2] + Math.RandomFloat(-20.0, 20.0);
             GetGame().CreateObject( WorkingZombieClasses().GetRandomElement(), m_DynamicPos, false, true);
         }
-		
-		// m_Particle = EntityAI.Cast(GetGame().CreateObject( "RDG2SmokeGrenade_Black", m_Drop.GetPosition(), false, true)); 
-       	// m_Particle.SetOrientation("0 0 0");
-        // m_Particle.GetCompEM().SwitchOn(); 
-        // m_Particle.Delete();
     }
 	
 	int m_Motion = 0;
