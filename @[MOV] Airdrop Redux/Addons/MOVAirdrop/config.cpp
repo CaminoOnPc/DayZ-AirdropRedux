@@ -73,7 +73,11 @@ class CfgVehicles
 		allowOwnedCargoManipulation=1;
 		*/
 	};
-	class AirDropContainer_Physical: HouseNoDestruct
+	class AirDropContainerParticle: HouseNoDestruct
+	{
+		scope=1;
+	};
+	class AirDropContainerPhysical: HouseNoDestruct
 	{
 		scope=1;
 		model="\airdrop\container.p3d";

@@ -171,10 +171,12 @@ class AirDrop_Base
 	}
 	
 	House m_Drop;
+	House m_Particle;
 	
 	void ResetDrop()
 	{
 		 GetGame().ObjectDelete(m_Drop);
+		 GetGame().ObjectDelete(m_Particle);
 	}
 		   
 	void AirDrop_Base() 
@@ -198,6 +200,13 @@ class AirDrop_Base
 		
         GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(InitPlane, m_Settings.m_Interval * 60 * 1000, false);
     }
+	
+	void CustomPlane(bool l_Custom = false, int l_Side = 0, float l_X = 0, float l_Y = 0, string l_Name = "")
+	{
+		ResetPlane();
+        ResetDrop();
+        SpawnPlane(l_Custom, l_Side, l_X, l_Y, l_Name);
+	}
 		
 	ref AirDrop_Places m_ActiveAirDropPlaces;
 	
@@ -207,7 +216,7 @@ class AirDrop_Base
 	bool m_Custom;
 	string m_CustomName;
 	
-	void SpawnPlane(bool l_Custom = false, int l_Side = 0, int l_X = 0, int l_Y = 0, string l_Name = "") 
+	void SpawnPlane(bool l_Custom = false, int l_Side = 0, float l_X = 0, float l_Y = 0, string l_Name = "") 
 	{
 		Print("<AirDrop> Spawning plane");
 		
@@ -357,7 +366,8 @@ class AirDrop_Base
 			vector m_TempPos = m_Drop.GetPosition();
 			vector m_TempOri = m_Drop.GetOrientation();
 			GetGame().ObjectDelete(m_Drop);
-			m_Drop = GetGame().CreateObject( "AirDropContainer", m_TempPos);	
+			m_Drop = GetGame().CreateObject( "AirDropContainer", m_TempPos);
+			m_Particle = GetGame().CreateObject( "AirDropContainerParticle", m_TempPos, false, true);
 			m_Drop.SetOrientation(m_TempOri);
             Print("<AirDrop> Container did hit the surface");		
             AfterDrop();
@@ -368,7 +378,7 @@ class AirDrop_Base
 	{
 		GetAirdropSound().PlaySignal();
 		
-        m_Drop = GetGame().CreateObject( "AirDropContainer_Physical", m_Plane.GetPosition() + "0 -10 0" );	
+        m_Drop = GetGame().CreateObject( "AirDropContainerPhysical", m_Plane.GetPosition() + "0 -10 0" );	
 		if ( m_Drop == NULL ) return;
 		dBodyDestroy( m_Drop );	
 		autoptr PhysicsGeomDef geoms[] = {PhysicsGeomDef("", dGeomCreateBox("3.8 2.75 3.8"), "material/default", 0xffffffff)};
