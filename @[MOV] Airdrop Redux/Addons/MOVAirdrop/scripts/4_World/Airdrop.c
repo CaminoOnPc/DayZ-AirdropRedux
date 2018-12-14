@@ -204,13 +204,35 @@ class AirDrop_Base
 	vector m_PlaneSpawn;
 	vector m_DropPos;
 	
-	EffectSound m_Sound;
+	bool m_Custom;
+	string m_CustomName;
 	
-	void SpawnPlane() 
+	void SpawnPlane(bool l_Custom = false, int l_Side = 0, int l_X = 0, int l_Y = 0, string l_Name = "") 
 	{
 		Print("<AirDrop> Spawning plane");
 		
-        int side = Math.RandomInt(0,4);
+		if (l_Custom)
+		{
+			m_Custom = true;
+			m_CustomName = l_Name;
+		}
+		else
+		{
+			m_Custom = false;
+			m_CustomName = l_Name;
+		}
+		
+		int side;
+		
+		if (l_Custom)
+		{
+			side = l_Side;
+		}
+		else
+		{
+			side = Math.RandomInt(0,4);
+		}
+		
         switch(side) {
             case 0: {
                 m_PlaneSpawn[0] = 0.0;
@@ -241,25 +263,53 @@ class AirDrop_Base
 				
 		AirDrop_Places m_DefaultAirDropPlaces = new AirDrop_Places(2760.0, 5527.0, "Default");	
 		
-		if(m_SpawnCount < 1) 
+		if (!l_Custom)
 		{
-			Print("<AirDrop> Spawning places count is lower than one");
-			m_ActiveAirDropPlaces = m_DefaultAirDropPlaces;
-		}
-		else
-		{
-			m_ActiveAirDropPlaces =  m_AirDropPlaces[Math.RandomInt(0, m_SpawnCount - 1)];
+			if(m_SpawnCount < 1) 
+			{
+				Print("<AirDrop> Spawning places count is lower than one");
+				m_ActiveAirDropPlaces = m_DefaultAirDropPlaces;
+			}
+			else
+			{
+				m_ActiveAirDropPlaces =  m_AirDropPlaces[Math.RandomInt(0, m_SpawnCount - 1)];
+			}
 		}
 		
 		vector m_Temp;
-        m_Temp[0] = m_ActiveAirDropPlaces.x;
-        m_Temp[1] = GetGame().SurfaceY(m_ActiveAirDropPlaces.x, m_ActiveAirDropPlaces.y) + 1;
-        m_Temp[2] = m_ActiveAirDropPlaces.y;
-			
-		SendMessage("The airplane is heading towards " + m_ActiveAirDropPlaces.name);
 		
-		m_DropPos[0] = m_ActiveAirDropPlaces.x;
-        m_DropPos[1] = m_ActiveAirDropPlaces.y;
+		if (l_Custom)
+		{
+			m_Temp[0] = l_X;
+			m_Temp[1] = GetGame().SurfaceY(l_X, l_Y) + 1;
+			m_Temp[2] = l_Y;
+		}	
+		else
+		{
+			m_Temp[0] = m_ActiveAirDropPlaces.x;
+			m_Temp[1] = GetGame().SurfaceY(m_ActiveAirDropPlaces.x, m_ActiveAirDropPlaces.y) + 1;
+			m_Temp[2] = m_ActiveAirDropPlaces.y;
+		}
+			
+		if (l_Custom)
+		{
+			SendMessage("The airplane is heading towards " + l_Name);
+		}
+		else
+		{
+			SendMessage("The airplane is heading towards " + m_ActiveAirDropPlaces.name);
+		}
+		
+		if (l_Custom)
+		{
+			m_DropPos[0] = l_X;
+			m_DropPos[1] = l_Y;
+		}
+		else
+		{
+			m_DropPos[0] = m_ActiveAirDropPlaces.x;
+			m_DropPos[1] = m_ActiveAirDropPlaces.y;
+		}
 		
 		float m_Angle = Math.Atan2(m_DropPos[1] - m_PlaneSpawn[1], m_DropPos[0] - m_PlaneSpawn[0]);
         float m_FixedAngle = m_Angle * Math.RAD2DEG;
@@ -352,13 +402,27 @@ class AirDrop_Base
 			{
 				m_Landed = true;
 				Drop();
-				SendMessage("The supplies have been dropped around " + m_ActiveAirDropPlaces.name);
+				if (m_Custom)
+				{
+					SendMessage("The supplies have been dropped around " + m_CustomName);
+				}
+				else
+				{
+					SendMessage("The supplies have been dropped around " + m_ActiveAirDropPlaces.name);
+				}
 			}
 			else if(m_Dist <= m_ProximityDist && !m_ProximityWarning) 
 			{
 				m_ProximityWarning = true;
 				GetAirdropSound().PlaySignal();
-				SendMessage("The plane is closing in on " + m_ActiveAirDropPlaces.name);
+				if (m_Custom)
+				{
+					SendMessage("The plane is closing in on " + m_CustomName);
+				}
+				else
+				{
+					SendMessage("The plane is closing in on " + m_ActiveAirDropPlaces.name);
+				}	
 			}
 		}
 		else 
