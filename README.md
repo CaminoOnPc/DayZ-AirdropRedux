@@ -23,6 +23,20 @@ Open the **@MOVAirdrop** folder and there you would see **Settings** folder. In 
 * Variable Speed return how fast Airplane will fly.
 * Variable Height return how high Airplane will fly above the surface.
 
+### Call an airdrop function
+
+You can call different airdrop functions from your mod or mission, for example you can spawn airplane using this code:
+
+```cpp
+GetAirdropBase().CustomPlane(true, 0, 9000, 5000, "my airdrop place");
+```
+
+* For the bool variable 'true' you would enable or dissable custom plane.
+* For the int variable '0' you would select direction from where plane would fly.
+* For the int variable '9000' you would select x axis where airdrop should land.
+* For the int variable '5000' you would select y axis where airdrop should land.
+* For the string variable 'my airdrop place' you would select name of your location.
+
 ## Contributors
 
 * [mov3ax](https://github.com/mov3ax)
