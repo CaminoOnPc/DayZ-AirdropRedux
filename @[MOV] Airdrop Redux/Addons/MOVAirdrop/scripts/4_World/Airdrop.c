@@ -381,8 +381,18 @@ class AirDrop_Base
         m_Drop = GetGame().CreateObject( "AirDropContainerPhysical", m_Plane.GetPosition() + "0 -10 0" );	
 		if ( m_Drop == NULL ) return;
 		dBodyDestroy( m_Drop );	
-		autoptr PhysicsGeomDef geoms[] = {PhysicsGeomDef("", dGeomCreateBox("3.8 2.75 3.8"), "material/default", 0xffffffff)};
+		
+		vector m_MinMax[2];
+		vector m_Size;
+			
+		physicsObj.GetCollisionBox(m_MinMax);
+		m_Size[0] = m_MinMax[1][0] - m_MinMax[0][0];
+		m_Size[2] = m_MinMax[1][2] - m_MinMax[0][2];
+		m_Size[1] = m_MinMax[1][1] - m_MinMax[0][1];
+			
+		autoptr PhysicsGeomDef geoms[] = {PhysicsGeomDef("", dGeomCreateBox(m_Size), "material/default", 0xffffffff)};
 		dBodyCreateDynamicEx( m_Drop, "0 0 0", m_Settings.m_Mass, geoms );
+		dBodyCollisionBlock(m_Drop, GetGame().GetWorld());
 		SetVelocity(m_Drop, "0 -1 0");	
 		
         GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(DropSimulation, 10, true);
