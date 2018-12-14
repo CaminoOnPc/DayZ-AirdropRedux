@@ -18,7 +18,7 @@ class CfgMods
 {
 	class MOVAirdrop
 	{
-	    dir = "MOVAirdrop";
+	    dir = "[MOV] Airdrop Redux";
 	    picture = "";
 	    action = "";
 	    hideName = 1;

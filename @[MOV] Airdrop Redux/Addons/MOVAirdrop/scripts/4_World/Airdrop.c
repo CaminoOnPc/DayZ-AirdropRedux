@@ -1,5 +1,5 @@
-protected static const string JSON_PATH = "$CurrentDir:@MOVAirdrop\\Settings\\AirDrop_Settings.json";
-protected static const string JSON_PATH_ALT = "$CurrentDir:@[MOV] Airdrop Redux\\Settings\\AirDrop_Settings.json";
+protected static const string JSON_PATH = "$CurrentDir:@[MOV] Airdrop Redux\\Settings\\AirDrop_Settings.json";
+protected static const string JSON_PATH_ALT = "$CurrentDir:!Workshop\\@[MOV] Airdrop Redux\\Settings\\AirDrop_Settings.json";
 		
 class AirDrop_Settings
 {
@@ -29,12 +29,12 @@ class AirDrop_Settings
     {
 		ref AirDrop_Settings settings = new AirDrop_Settings();
 		
-		if (FileExist(JSON_PATH)
+		if (FileExist(JSON_PATH))
 		{
 			JsonFileLoader<AirDrop_Settings>.JsonLoadFile( JSON_PATH, settings );
 			Print("<AirDrop> Config was loaded");
 		}
-		else if (FileExist(JSON_PATH_ALT)
+		else if (FileExist(JSON_PATH_ALT))
 		{
 			JsonFileLoader<AirDrop_Settings>.JsonLoadFile( JSON_PATH_ALT, settings );
 			Print("<AirDrop> Config was loaded");
@@ -175,9 +175,6 @@ class AirDrop_Base
 	void ResetDrop()
 	{
 		 GetGame().ObjectDelete(m_Drop);
-		
-		 if (m_Particle)
-		 	m_Particle.GetCompEM().SwitchOff();
 	}
 		   
 	void AirDrop_Base() 
@@ -275,9 +272,7 @@ class AirDrop_Base
 		
 		GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(MovePlane, 20, true);
 	}
-	
-	House m_Particle;
-	
+
 	void AfterDrop() 
 	{
         vector m_Base = m_Drop.GetPosition(), m_DynamicPos;
@@ -314,7 +309,7 @@ class AirDrop_Base
 			GetGame().ObjectDelete(m_Drop);
 			m_Drop = GetGame().CreateObject( "AirDropContainer", m_TempPos);	
 			m_Drop.SetOrientation(m_TempOri);
-            Print("<AirDrop> Container did hit the surface");
+            Print("<AirDrop> Container did hit the surface");		
             AfterDrop();
 		}
     }
@@ -324,7 +319,6 @@ class AirDrop_Base
 		GetAirdropSound().PlaySignal();
 		
         m_Drop = GetGame().CreateObject( "AirDropContainer_Physical", m_Plane.GetPosition() + "0 -10 0" );	
-		
 		if ( m_Drop == NULL ) return;
 		dBodyDestroy( m_Drop );	
 		autoptr PhysicsGeomDef geoms[] = {PhysicsGeomDef("", dGeomCreateBox("3.8 2.75 3.8"), "material/default", 0xffffffff)};
