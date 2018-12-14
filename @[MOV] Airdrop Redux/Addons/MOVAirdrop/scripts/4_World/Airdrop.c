@@ -385,7 +385,7 @@ class AirDrop_Base
 		vector m_MinMax[2];
 		vector m_Size;
 			
-		physicsObj.GetCollisionBox(m_MinMax);
+		m_Drop.GetCollisionBox(m_MinMax);
 		m_Size[0] = m_MinMax[1][0] - m_MinMax[0][0];
 		m_Size[2] = m_MinMax[1][2] - m_MinMax[0][2];
 		m_Size[1] = m_MinMax[1][1] - m_MinMax[0][1];
