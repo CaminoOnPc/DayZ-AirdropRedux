@@ -1,5 +1,5 @@
-protected static const string JSON_PATH = "$CurrentDir:@[MOV] Airdrop Redux\\Settings\\AirDrop_Settings.json";
-protected static const string JSON_PATH_ALT = "$CurrentDir:!Workshop\\@[MOV] Airdrop Redux\\Settings\\AirDrop_Settings.json";
+protected static const string JSON_PATH = "$CurrentDir:@AirdropRedux\\Settings\\AirDrop_Settings.json";
+protected static const string JSON_PATH_ALT = "$CurrentDir:!Workshop\\@AirdropRedux\\Settings\\AirDrop_Settings.json";
 		
 class AirDrop_Settings
 {
