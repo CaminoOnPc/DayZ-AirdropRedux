@@ -12,7 +12,7 @@ First of all you have to download [Notification Framework](https://github.com/mo
 
 ### Configuration
 
-Open the **@MOVAirdrop** folder and there you would see **Settings** folder. In that **Settings** folder you can adjust following variables from **AirDrop_Settings.json** file.
+Open the **@AirdropRedux** folder and there you would see **Settings** folder. In that **Settings** folder you can adjust following variables from **AirDrop_Settings.json** file.
 
 * Array Loot return type of items which will spawn in AirDrop.
 * Variable Interval return how ofter AirDrop will fly.
