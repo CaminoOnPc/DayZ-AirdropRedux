@@ -1,9 +1,3 @@
-enum SoundType
-{
-    Loop = 0,
-    Alert
-}
-
 class AirDrop_Sound
 {
 	void AirDrop_Sound()
