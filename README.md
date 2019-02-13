@@ -12,9 +12,10 @@ First of all you have to download [Notification Framework](https://github.com/mo
 
 ### Configuration
 
-Open the **@AirdropRedux** folder and there you would see **Settings** folder. In that **Settings** folder you can adjust following variables from **AirDrop_Settings.json** file.
+Open the your server **profiles** folder and there you should create **Airdrop\Settings** folder. In that **Settings** folder you can adjust following variables from **Settings.json** file.
 
 * Array Loot return type of items which will spawn in AirDrop.
+* Array Air Drop Places return locations where AirDrop will spawn.
 * Variable Interval return how ofter AirDrop will fly.
 * Variable Initial return how much time will pass from server start to first AirDrop spawn.
 * Variable Items return how many items will spawn in AirDrop.
