@@ -1,6 +1,20 @@
-protected static const string JSON_PATH = "$CurrentDir:@AirdropRedux\\Settings\\AirDrop_Settings.json";
-protected static const string JSON_PATH_ALT = "$CurrentDir:!Workshop\\@AirdropRedux\\Settings\\AirDrop_Settings.json";
-		
+protected static const string JSON_PATH_DIRECTORY_SETTINGS = "$profile:Airdrop\\Settings\\";
+protected static const string JSON_PATH_SETTINGS = "$profile:Airdrop\\Settings\\Settings.json";
+
+class AirDrop_Places
+{
+    float x, y;
+    string name;
+    bool disclose, send_proximity;
+
+    void AirDrop_Places(float x, float y, string name) 
+	{
+        this.x = x;
+        this.y = y;
+        this.name = name;
+    }
+}
+	
 class AirDrop_Settings
 {
 	// Items which will spawn in airdrop
@@ -13,7 +27,17 @@ class AirDrop_Settings
 		"BakedBeansCan", 
 		"WaterBottle", 
 	};
-
+	
+	// Places where airdrop will fall, x, y axis and name of location
+	ref array<ref AirDrop_Places> m_AirDropPlaces = {
+    	new AirDrop_Places(4807, 9812, "northwest airfield"),
+		new AirDrop_Places(2351, 5393, "zelenogorks"),
+		new AirDrop_Places(2036, 7491, "myshkino"),
+		new AirDrop_Places(2700, 6193, "sosnovka"),
+		new AirDrop_Places(7436, 7720, "novy sobor"),
+		new AirDrop_Places(5823, 7764, "stary sobor"),
+	};	
+	
 	float m_Interval = 60.0; // Time in minutes from server start to first airdrop spawn
 	float m_Initial = 60.0; // Time in mutires how ofter airdrop will spawn
 	
@@ -29,63 +53,27 @@ class AirDrop_Settings
     {
 		ref AirDrop_Settings settings = new AirDrop_Settings();
 		
-		if (FileExist(JSON_PATH))
+		if ( !FileExist( JSON_PATH_DIRECTORY_SETTINGS ) )
 		{
-			JsonFileLoader<AirDrop_Settings>.JsonLoadFile( JSON_PATH, settings );
-			Print("<AirDrop> Config was loaded");
+			MakeDirectory( JSON_PATH_DIRECTORY_SETTINGS );
 		}
-		else if (FileExist(JSON_PATH_ALT))
+		
+		if ( !FileExist( JSON_PATH_SETTINGS ) )
 		{
-			JsonFileLoader<AirDrop_Settings>.JsonLoadFile( JSON_PATH_ALT, settings );
-			Print("<AirDrop> Config was loaded");
+			JsonFileLoader<AirDrop_Settings>.JsonSaveFile(JSON_PATH_SETTINGS, settings );
 		}
-		else
-		{
-			Print("<AirDrop> Config was not loaded");
-		}
+		
+		JsonFileLoader<AirDrop_Settings>.JsonLoadFile(JSON_PATH_SETTINGS, settings );
+		Print("<AirDrop> Config was loaded");
 		
 		return settings;
 	}
-}
-
-class AirDrop_Places
-{
-    float x, y;
-    string name;
-    bool disclose, send_proximity;
-
-    void AirDrop_Places(float x, float y, string name) 
-	{
-        this.x = x;
-        this.y = y;
-        this.name = name;
-    }
 }
 
 class AirDrop_Base
 {
 	ref AirDrop_Settings m_Settings;
 		
-	int m_SpawnCount = 14; // In how many points airdrop will fall, count it from list above
-
-	// Places where airdrop will fall, x, y axis and name of location
-	ref AirDrop_Places m_AirDropPlaces[] = {
-    	new AirDrop_Places(4807, 9812, "northwest airfield"), 
-		AirDrop_Places(11464, 8908, "berezino"),
-		AirDrop_Places(12159, 12583, "krasnostav"),
-		AirDrop_Places(5043, 2505, "balota"),
-		AirDrop_Places(2351, 5393, "zelenogorks"),
-		AirDrop_Places(2036, 7491, "myshkino"),
-		AirDrop_Places(11125, 14040, "novodmitrovsk"),
-		AirDrop_Places(6128, 2497, "chernogorks"),
-		AirDrop_Places(9371, 2229, "elektrozavodsk"),
-		AirDrop_Places(10479, 2664, "elektrozavodsk"),
-		AirDrop_Places(13452, 3112, "skalisty island"),
-		AirDrop_Places(2700, 6193, "sosnovka"),
-		AirDrop_Places(7436, 7720, "novy sobor"),
-		AirDrop_Places(5823, 7764, "stary sobor"),
-	};	
-	
 	TStringArray WorkingZombieClasses() // List of zombie types that will spawn around airdrop
 	{
 		return {
@@ -135,7 +123,7 @@ class AirDrop_Base
 		"ZmbF_Clerk_Normal_Base","ZmbF_Clerk_Normal_Blue","ZmbF_Clerk_Normal_White","ZmbF_Clerk_Normal_Green","ZmbF_Clerk_Normal_Red",
 		};
 	}
-
+	
 	string GetRandomLoot() 
 	{
 		return m_Settings.m_Loot.GetRandomElement();
@@ -274,14 +262,14 @@ class AirDrop_Base
 		
 		if (!l_Custom)
 		{
-			if(m_SpawnCount < 1) 
+			if (m_Settings.m_AirDropPlaces.Count() < 1) 
 			{
 				Print("<AirDrop> Spawning places count is lower than one");
 				m_ActiveAirDropPlaces = m_DefaultAirDropPlaces;
 			}
 			else
 			{
-				m_ActiveAirDropPlaces =  m_AirDropPlaces[Math.RandomInt(0, m_SpawnCount - 1)];
+				m_ActiveAirDropPlaces =  m_Settings.m_AirDropPlaces[Math.RandomInt(0, m_Settings.m_AirDropPlaces.Count() - 1)];
 			}
 		}
 		
@@ -393,7 +381,7 @@ class AirDrop_Base
 		autoptr PhysicsGeomDef geoms[] = {PhysicsGeomDef("", dGeomCreateBox(m_Size), "material/default", 0xffffffff)};
 		dBodyCreateDynamicEx( m_Drop, "0 0 0", m_Settings.m_Mass, geoms );
 		dBodyCollisionBlock(m_Drop, GetGame().GetWorld());
-		SetVelocity(m_Drop, "0 -1 0");	
+		SetVelocity(m_Drop, "0 -0.8 0");	
 		
         GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(DropSimulation, 10, true);
     }
