@@ -8,7 +8,7 @@ This is how you would use this mod.
 
 ### Setup
 
-First of all you have to download [Notification Framework](https://github.com/mov3ax/DayZ-NotificationFramework/releases) and [RPC Framework](https://github.com/Jacob-Mango/DayZ-RPCFramework/releases) to make it work. Then download [AirDrop Redux](https://github.com/mov3ax/DayZ-AirdropRedux/releases) itself and follow installation tutorial of [RPC Framework](https://github.com/Jacob-Mango/DayZ-RPCFramework) and install AirDrop Redux same way.
+First of all you have to download [Notification Framework](https://steamcommunity.com/workshop/filedetails/?id=1585487785) and [RPC Framework](https://github.com/Jacob-Mango/DayZ-RPCFramework/releases) to make it work. Then download [AirDrop Redux](https://github.com/mov3ax/DayZ-AirdropRedux/releases) itself and follow installation tutorial of [RPC Framework](https://github.com/Jacob-Mango/DayZ-RPCFramework) and install AirDrop Redux same way.
 
 ### Configuration
 
