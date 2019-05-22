@@ -1,6 +1,6 @@
-# AirDrop Redux mod for DayZ
+# Airdrop mod for DayZ
 
-AirDrop Redux is overwork of original [AirDrop](https://github.com/mov3ax/airdrop) mod. AirDrop Redux is a mod from now and it's required to be installed on both client and server.
+Airdrop is overwork of original [Airdrop](https://github.com/mov3ax/DayZ-Airdrop) mod. Airdrop is a mod from now and it's required to be installed on both client and server.
 
 ## How To Use
 
@@ -8,35 +8,11 @@ This is how you would use this mod.
 
 ### Setup
 
-First of all you have to download [Notification Framework](https://steamcommunity.com/workshop/filedetails/?id=1585487785) and [RPC Framework](https://github.com/Jacob-Mango/DayZ-RPCFramework/releases) to make it work. Then download [AirDrop Redux](https://github.com/mov3ax/DayZ-AirdropRedux/releases) itself and follow installation tutorial of [RPC Framework](https://github.com/Jacob-Mango/DayZ-RPCFramework) and install AirDrop Redux same way.
+First of all you have to download [Notification Framework](https://steamcommunity.com/workshop/filedetails/?id=1585487785) and [Community Framework](https://steamcommunity.com/sharedfiles/filedetails/?id=1559212036) to make it work. Then download [Airdrop](https://steamcommunity.com/sharedfiles/filedetails/?id=1586921998&searchtext=airdrop) itself and follow installation tutorial of [Community Framework](https://github.com/Jacob-Mango/DayZ-Community-Framework) and install Airdrop same way.
 
 ### Configuration
 
 Open the your server **profiles** folder and there you should create **Airdrop\Settings** folder. In that **Settings** folder you can adjust following variables from **Settings.json** file.
-
-* Array Loot return type of items which will spawn in AirDrop.
-* Array Air Drop Places return locations where AirDrop will spawn.
-* Variable Interval return how ofter AirDrop will fly.
-* Variable Initial return how much time will pass from server start to first AirDrop spawn.
-* Variable Items return how many items will spawn in AirDrop.
-* Variable Infected return how many infected will spawn around AirDrop.
-* Variable Mass return mass of AirDrop container.
-* Variable Speed return how fast Airplane will fly.
-* Variable Height return how high Airplane will fly above the surface.
-
-### Call an airdrop function
-
-You can call different airdrop functions from your mod or mission, for example you can spawn airplane using this code:
-
-```cpp
-GetAirdropBase().CustomPlane(true, 0, 9000, 5000, "my airdrop place");
-```
-
-* For the bool variable 'true' you would enable or dissable custom plane.
-* For the int variable '0' you would select direction from where plane would fly.
-* For the int variable '9000' you would select x axis where airdrop should land.
-* For the int variable '5000' you would select y axis where airdrop should land.
-* For the string variable 'my airdrop place' you would select name of your location.
 
 ## Contributors
 
