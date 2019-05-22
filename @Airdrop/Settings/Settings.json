@@ -1,0 +1,170 @@
+{
+    "Interval": 1,
+    "Update": 0.01,
+    "Items": 20,
+    "Infected": 15,
+    "Message": 0,
+    "Speed": 10,
+    "Height": 500,
+    "AirdropContainers": [
+        "AirdropContainer_Medical",
+        "AirdropContainer_Military",
+        "AirdropContainer"
+    ],
+    "AirdropZombies": [
+        "ZmbM_HermitSkinny_Base",
+        "ZmbM_HermitSkinny_Beige",
+        "ZmbM_HermitSkinny_Black",
+        "ZmbM_HermitSkinny_Green",
+        "ZmbM_HermitSkinny_Red",
+        "ZmbM_FarmerFat_Base",
+        "ZmbM_FarmerFat_Beige",
+        "ZmbM_FarmerFat_Blue",
+        "ZmbM_FarmerFat_Brown",
+        "ZmbM_FarmerFat_Green",
+        "ZmbF_CitizenANormal_Base",
+        "ZmbF_CitizenANormal_Beige",
+        "ZmbF_CitizenANormal_Brown",
+        "ZmbF_CitizenANormal_Blue"
+    ],
+    "DropLocations": [
+        {
+            "x": 4807,
+            "y": 9812,
+            "Name": "northwest airfield",
+            "Radius": 100
+        },
+        {
+            "x": 11464,
+            "y": 8908,
+            "Name": "berezino",
+            "Radius": 100
+        },
+        {
+            "x": 12159,
+            "y": 12583,
+            "Name": "krasnostav",
+            "Radius": 100
+        },
+        {
+            "x": 5043,
+            "y": 2505,
+            "Name": "balota",
+            "Radius": 100
+        },
+        {
+            "x": 2351,
+            "y": 5393,
+            "Name": "zelenogorks",
+            "Radius": 100
+        },
+        {
+            "x": 2036,
+            "y": 7491,
+            "Name": "myshkino",
+            "Radius": 100
+        },
+        {
+            "x": 11125,
+            "y": 14040,
+            "Name": "novodmitrovsk",
+            "Radius": 100
+        },
+        {
+            "x": 6128,
+            "y": 2497,
+            "Name": "chernogorks",
+            "Radius": 100
+        },
+        {
+            "x": 9371,
+            "y": 2229,
+            "Name": "elektrozavodsk",
+            "Radius": 100
+        },
+        {
+            "x": 13452,
+            "y": 3112,
+            "Name": "skalisty island",
+            "Radius": 100
+        },
+        {
+            "x": 2700,
+            "y": 6193,
+            "Name": "sosnovka",
+            "Radius": 100
+        },
+        {
+            "x": 7436,
+            "y": 7720,
+            "Name": "novy sobor",
+            "Radius": 100
+        },
+        {
+            "x": 5823,
+            "y": 7764,
+            "Name": "stary sobor",
+            "Radius": 100
+        }
+    ],
+    "LootTiers": [
+        {
+            "Name": "AirdropContainer",
+            "Loot": [
+                "Izh18",
+                "Mossin9130",
+                "AmmoBox_762x54_20Rnd",
+                "AmmoBox_762x39_20Rnd",
+                "M4A1",
+                "BakedBeansCan",
+                "WaterBottle",
+                "FNX45",
+                "Mag_STANAG_30Rnd",
+                "AKM",
+                "Mag_AKM_30Rnd",
+                "Rice",
+                "PowderedMilk",
+                "Vodka"
+            ]
+        },
+        {
+            "Name": "AirdropContainer_Medical",
+            "Loot": [
+                "Canteen",
+                "PowderedMilk",
+                "Marmalade",
+                "BakedBeansCan",
+                "PeachesCan",
+                "SpaghettiCan",
+                "TunaCan",
+                "Pot",
+                "VitaminBottle",
+                "BoxCerealCrunchin",
+                "TacticalBaconCan"
+            ]
+        },
+        {
+            "Name": "AirdropContainer_Military",
+            "Loot": [
+                "LandMineTrap",
+                "TTSKOPants",
+                "TacticalBaconCan",
+                "M4A1",
+                "PlateCarrierComplete",
+                "MilitaryBoots_Redpunk",
+                "CombatBoots_Grey",
+                "FNX45",
+                "Mag_STANAG_30Rnd",
+                "AKM",
+                "Mag_AKM_30Rnd",
+                "LargeTent",
+                "Izh18",
+                "Mosin9130",
+                "Mosin_Bayonet",
+                "Mosin_Compensator",
+                "AmmoBox_762x54_20Rnd",
+                "AmmoBox_762x39_20Rnd"
+            ]
+        }
+    ]
+}
