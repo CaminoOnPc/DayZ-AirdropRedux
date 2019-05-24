@@ -4,7 +4,7 @@
     "Items": 20,
     "Infected": 15,
     "Message": 0,
-    "Speed": 10,
+    "Speed": 1,
     "Height": 500,
     "AirdropContainers": [
         "AirdropContainer_Medical",
