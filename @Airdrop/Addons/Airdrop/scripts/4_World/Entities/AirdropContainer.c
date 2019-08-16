@@ -96,7 +96,7 @@ class AirdropContainerBase extends House
 	{
 		if (GetGame().IsClient() || !GetGame().IsMultiplayer()) 
 		{
-			if (IsGround(1)) 
+			if (IsGround(0.5)) 
 			{
 				if (m_ParticleEfx)
 					m_ParticleEfx.Stop();
@@ -108,7 +108,7 @@ class AirdropContainerBase extends House
 
 		if (GetGame().IsServer()) 
 		{
-			if (!IsGround(1)) 
+			if (!IsGround(0.5)) 
 				EOnFall();
 			else 
 				EOnLand();		

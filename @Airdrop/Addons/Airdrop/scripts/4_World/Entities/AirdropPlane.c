@@ -85,17 +85,23 @@ class AirdropPlane extends House
 			MoveInTime( transform, dt );
 
 			EOnBeforeDrop();
-			EOnBeforeDelete();
+
+			if (EOnBeforeDelete())
+			{
+				GetGame().GetCallQueue( CALL_CATEGORY_SYSTEM ).CallLater( GetGame().ObjectDelete, 0, false, this );
+			}
 		}
 	}
 
-	void EOnBeforeDelete()
+	bool EOnBeforeDelete()
 	{
 		vector position = GetPosition();
 		if ( !IsInRect( position[0], position[2], -10.0, 15470.0, -10.0, 15470.0 ) )
 		{
-			GetGame().GetCallQueue( CALL_CATEGORY_SYSTEM ).CallLater( GetGame().ObjectDelete, 0, false, this );
+			return true;
 		}
+
+		return false;
 	}
 
 	void EOnBeforeDrop()

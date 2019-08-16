@@ -59,7 +59,7 @@ class AirdropSettings
         Infected = 20;
 		Message = 0;
 		
-        Speed = 1.0;
+        Speed = 100.0;
         Height = 500.0;
 		
 		DropLocations.Insert( new ref AirdropPlaces(4807, 9812, 100, "northwest airfield") );
