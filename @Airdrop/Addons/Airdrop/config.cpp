@@ -1,5 +1,3 @@
-// #include "BIS_AddonInfo.hpp"
-
 class CfgPatches
 {
 	class Airdrop
@@ -26,8 +24,8 @@ class CfgMods
 	    hideName = 1;
 	    hidePicture = 1;
 	    name = "Airdrop";
-	    credits = "mov3ax, philipp";
-	    author = "mov3ax, philipp";
+	    credits = "Camino, philipp";
+	    author = "Camino, philipp";
 	    authorID = "0";
 	    version = "1.0";
 	    extra = 0;
