@@ -1,6 +1,6 @@
 # Airdrop mod for DayZ
 
-Airdrop is overwork of original [Airdrop](https://github.com/mov3ax/DayZ-Airdrop) mod. Airdrop is a mod from now and it's required to be installed on both client and server.
+Airdrop is overwork of original [Airdrop](https://github.com/CAMINOonPC/DayZ-Airdrop) mod. Airdrop is a mod from now and it's required to be installed on both client and server.
 
 ## How To Use
 
@@ -16,7 +16,7 @@ Open the your server **profiles** folder and there you should create **Airdrop\S
 
 ## Contributors
 
-* [mov3ax](https://github.com/mov3ax)
+* [CAMINOonPC](https://github.com/CAMINOonPC)
 * [philippj](https://github.com/philippj)
 * Mr9099
 
